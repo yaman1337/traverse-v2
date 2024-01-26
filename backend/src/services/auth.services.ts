@@ -1,7 +1,5 @@
-export const createAccount = () => {
-    console.log("createAccount service")
-}
+export const createAccount = async (email: string, password: string) => {};
 
 export const login = () => {
-    console.log("Login service")
-}
+  console.log("Login service");
+};
