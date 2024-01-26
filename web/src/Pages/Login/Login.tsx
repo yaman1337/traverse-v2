@@ -9,7 +9,6 @@ import { Spin, Typography } from "@arco-design/web-react";
 import { useState } from "react";
 import ForgetPassword from "../ForgetPassword/ForgetPassword";
 import { account } from "../../lib/appwrite";
-import { useNavigate } from "react-router-dom";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -17,13 +16,11 @@ export default function Login() {
 
   const [loading, setLoading] = useState(false);
 
-  const navigate = useNavigate();
-
   const handLogin = async () => {
     setLoading(true);
     try {
       await account.createEmailSession(email, password);
-      navigate("/dashboard");
+      window.location.reload()
     } catch (error) {
       if (error instanceof Error) alert(error.message);
     } finally {
