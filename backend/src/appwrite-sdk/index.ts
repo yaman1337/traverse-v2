@@ -1,22 +1,28 @@
 import sdk, { Client } from "node-appwrite";
-import appwrite from "appwrite";
+import dotenv from "dotenv"
+
+dotenv.config()
 
 const { APPWRITE_ENDPOINT, APPWRITE_PROJECT_ID, APPWRITE_API_KEY } =
   process.env;
 
-const appwriteClientInstance = new sdk.Client();
+export const AppwriteClient = new sdk.Client();
 
-appwriteClientInstance
-  .setEndpoint(APPWRITE_ENDPOINT as string)
-  .setProject(APPWRITE_PROJECT_ID as string);
+AppwriteClient.setEndpoint(APPWRITE_ENDPOINT as string)
+  .setProject(APPWRITE_PROJECT_ID as string)
+  .setKey(APPWRITE_API_KEY as string);
 
-export class AppwriteClient {
+export const database = new sdk.Databases(AppwriteClient);
+export const account = new sdk.Databases(AppwriteClient);
+export const storage = new sdk.Databases(AppwriteClient);
+
+export class AppwriteClientWithJwt {
   jwt: string;
   client: Client;
 
   constructor(jwt: string) {
     this.jwt = jwt;
-    this.client = appwriteClientInstance.setJWT(this.jwt);
+    this.client = AppwriteClient.setJWT(this.jwt);
   }
 
   getDatabase() {
