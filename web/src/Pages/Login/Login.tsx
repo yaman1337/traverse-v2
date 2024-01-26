@@ -8,12 +8,28 @@ import "./Login.css";
 import { Spin, Typography } from "@arco-design/web-react";
 import { useState } from "react";
 import ForgetPassword from "../ForgetPassword/ForgetPassword";
+import { account } from "../../lib/appwrite";
+import { useNavigate } from "react-router-dom";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
+
+  const navigate = useNavigate();
+
+  const handLogin = async () => {
+    setLoading(true);
+    try {
+      await account.createEmailSession(email, password);
+      navigate("/dashboard");
+    } catch (error) {
+      if (error instanceof Error) alert(error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <>
@@ -23,13 +39,13 @@ export default function Login() {
         </div>
         <div className="login-form-container">
           <div className="login-form">
-            <Typography.Text 
+            <Typography.Text
               type="primary"
               className="my-3"
-              style={{fontSize: 22}}
+              style={{ fontSize: 22 }}
               bold
-              >
-                Login to continue..
+            >
+              Login to continue..
             </Typography.Text>
             <input
               type="email"
@@ -53,7 +69,7 @@ export default function Login() {
             >
               <button
                 style={{ width: "100%" }}
-                // onClick={(e) => loginHandle(e)}
+                onClick={handLogin}
                 type="submit"
                 className="submit-btn"
               >
@@ -69,7 +85,11 @@ export default function Login() {
           </div>
           <div className="signup-div">
             <p>
-              Don't have an account? <Link style={{ textDecoration: "none", color: "black" }} to="/signup">
+              Don't have an account?{" "}
+              <Link
+                style={{ textDecoration: "none", color: "black" }}
+                to="/signup"
+              >
                 Signup
               </Link>
             </p>
@@ -78,4 +98,4 @@ export default function Login() {
       </div>
     </>
   );
-};
+}
