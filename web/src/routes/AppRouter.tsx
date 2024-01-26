@@ -17,7 +17,7 @@ export default function AppRouter() {
       if (session.$id) setStatus("authenticated");
       else setStatus("no-authenticated");
     })();
-  }, [setStatus]);
+  }, []);
 
   if (status === "checking") return <div className="loading">Checking credentials...</div>;
 
