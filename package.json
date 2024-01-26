@@ -1,0 +1,8 @@
+{
+    "name": "sandbox_hackathon",
+    "version": "0.1.0",
+    "private": true,
+    "scripts": {
+        "web:dev": "cd web && yarn run dev"
+    }
+}
