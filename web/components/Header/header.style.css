@@ -1,0 +1,78 @@
+.header {
+    width: 100%;
+    height: 70px;
+    padding: 0 15px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    background-color: white;
+    box-shadow: 0 5px 10px #eeee !important;
+    z-index: 99;
+}
+
+.header .logo {
+    float: left;
+    margin-left: 10px;
+    font-size: 22px;
+    font-weight: 600;
+    color: #892be1;
+}
+
+.header .center {
+    display: flex;
+    flex-direction: row;
+}
+
+.header .center ul {
+    list-style-type: none;
+    display: flex;
+    flex-direction: row;
+    margin: 0;
+    gap: 0 0.7em;
+}
+
+.header .center ul li {
+    position: relative;
+    margin: 0 10px;
+    font-size: 15px;
+    cursor: pointer;
+    /* border-bottom: 1px solid transparent; */
+}
+
+.header .center ul li a{
+    text-decoration: none;
+    color: black;
+}
+
+.header .center ul li > a:hover,
+.header .center ul li:hover {
+    color: #892be1 !important;
+}
+
+.header .profile {
+    margin-right: 15px;
+}
+
+
+
+.header .profile .dropdown-toggle i {
+    font-size: 20px;
+}
+
+/* --------------------------- */
+/* .dropdown-menu css */
+
+.dropdown-demo > .arco-btn {
+    padding: 10px 10px;
+    font-weight: normal;
+}
+
+.header-dropwdown-btn > i{
+    font-size: 20px;
+    color: black;
+}
+
+.arco-trigger.arco-dropdown{
+    width: 135px;
+}
