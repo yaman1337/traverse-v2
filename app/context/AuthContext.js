@@ -1,16 +1,36 @@
-import { createContext, useState } from "react";
+import { createContext, useState, useEffect } from "react";
+import { account } from "../src/lib/appwrite";
 
 export const AuthContext = createContext();
 
 const AuthContextProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+  const [error, setError] = useState(null);
 
-  const login = () => {
-    setUser({ name: "Alexandro Daddario", email: "alexdra@gmail.com" });
+  useEffect(() => {
+    const getSession = async () => {
+      try {
+        const res = await account.getSession("current");
+        setUser(res);
+      } catch (error) {
+        setError(error.message);
+      }
+    };
+
+    getSession();
+  }, []);
+
+  const login = async (data) => {
+    setUser(data);
   };
 
-  const logout = () => {
-    setUser(null);
+  const logout = async () => {
+    try {
+      await account.deleteSession("current");
+      setUser(null);
+    } catch (error) {
+      setError(error.message);
+    }
   };
 
   return (
