@@ -7,6 +7,7 @@ import Reviews from '../Pages/Dashboard/Reviews/Reviews';
 import Contribute from "../Pages/Dashboard/Contribute/Contribute"
 import Accounts from '../Pages/Dashboard/Settings/Account/Account';
 import ChangePassword from '../Pages/Dashboard/Settings/Password/ChangePassword';
+import Rewards from '../Pages/Dashboard/Rewards/Rewards';
 
 export default function PrivateRoutes() {
   return (
@@ -19,6 +20,7 @@ export default function PrivateRoutes() {
         <Route path='dashboard/contribute' element={<DashboardLayout element={<Contribute />} />} />
         <Route path='dashboard/settings/account' element={<DashboardLayout element={<Accounts />} />} />
         <Route path='dashboard/settings/change-password' element={<DashboardLayout element={<ChangePassword />} />} />
+        <Route path='dashboard/rewards' element={<DashboardLayout element={<Rewards />} />} />
 
         <Route path='*' element={<Navigate to='/' replace />} />
     </Routes>
