@@ -4,11 +4,12 @@ import { PublicRoutes } from "./PublicRoutes";
 import Header from "../components/Header/Header";
 import { account } from "../lib/appwrite";
 import { useState, useEffect } from "react";
+import { Spin } from "@arco-design/web-react";
 
 type Status = "checking" | "authenticated" | "no-authenticated";
 
 export default function AppRouter() {
-  const [status, setStatus] = useState<Status>("no-authenticated");
+  const [status, setStatus] = useState<Status>("checking");
 
   useEffect(() => {
     (async function () {
@@ -18,24 +19,37 @@ export default function AppRouter() {
     })();
   }, [status]);
 
-  if (status === "no-authenticated") return
+  if (status === "no-authenticated")
+    return (
+      <BrowserRouter>
+        <Routes>
+          <Route path="/*" element={<PublicRoutes />} />
+        </Routes>
+      </BrowserRouter>
+    );
 
-  console.log("randi", status)
-  if (status === "checking") return <div className="loading">Checking credentials...</div>;
+  if (status === "checking")
+    return (
+      <div
+        style={{
+          height: "100vh",
+          width: "100%",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <Spin style={{ height: 300, width: 300 }} delay={500} />
+      </div>
+    );
 
   return (
     <>
       <BrowserRouter>
         <Header />
-
         <Routes>
-          {status === "authenticated" ? (
-            <Route path="/*" element={<PrivateRoutes />} />
-          ) : (
-            <Route path="/*" element={<PublicRoutes />} />
-          )}
-
-          <Route path="*" element={<Navigate to="/login" replace />} />
+          <Route path="/*" element={<PrivateRoutes />} />
+          <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </BrowserRouter>
     </>
