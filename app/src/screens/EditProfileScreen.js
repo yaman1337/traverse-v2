@@ -14,9 +14,7 @@ const EditProfileScreen = () => {
   const { user } = useContext(AuthContext);
 
   const [credentials, setCredentials] = useState({
-    oldPassword: "",
-    newPassword: "",
-    confirmPassword: "",
+    email: user?.email || "",
   });
 
   const handleChangePassword = () => {
@@ -44,7 +42,7 @@ const EditProfileScreen = () => {
           // disable the input
           editable={false}
         />
-        <AppInput value={user?.email} />
+        <AppInput value={credentials.email} />
         <Button
           font="Poppins-SemiBold"
           activeOpacity={0.8}
