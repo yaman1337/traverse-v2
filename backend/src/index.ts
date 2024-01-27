@@ -1,7 +1,6 @@
 import express, { Application, Request, Response } from "express";
 import dotenv from "dotenv";
-import { authRouter } from "./routes";
-import { placesRouter } from "./routes/places.route";
+import { authRouter, placesRouter, reviewsRouter } from "./routes";
 
 dotenv.config();
 
@@ -19,6 +18,7 @@ app.get("/", (req: Request, res: Response) => {
 // endpoints
 app.use("/auth", authRouter);
 app.use("/places", placesRouter);
+app.use("/reviews", reviewsRouter)
 
 app.listen(PORT, () => {
   console.log("Server is running on: http://localhost:" + PORT);
