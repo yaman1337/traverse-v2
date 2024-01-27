@@ -1,10 +1,10 @@
 import React from 'react';
-import { AppstoreOutlined, SettingOutlined, UserOutlined } from '@ant-design/icons';
+import { SettingOutlined, UserOutlined } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
 import { Avatar, Menu, Typography } from 'antd';
-import { redirect, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
-const { Text, Link, Title  } = Typography;
+const { Text, Title  } = Typography;
 
 type MenuItem = Required<MenuProps>['items'][number];
 
@@ -71,7 +71,7 @@ export default function Sidebar() {
 
     return (
         <>
-        <div style={{width: 280}} className='bg-white'>
+        <div style={{width: 320}} className='bg-white'>
             <AvatarComponent name='Bibek Shah' email='bibekshah563@gmail.com'/>
             <Menu
                 onClick={onClick}
