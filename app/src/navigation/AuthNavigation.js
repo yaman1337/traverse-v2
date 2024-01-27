@@ -9,7 +9,7 @@ import colors from "../../config/colors";
 import HomeScreen from "../screens/HomeScreen";
 import ProfileScreen from "../screens/ProfileScreen";
 import ChatScreen from "../screens/ChatScreen";
-import TravelScreen from "../screens/TravelScreen";
+import MyFavoriteScreen from "../screens/MyFavoriteScreen";
 import MyTourScreen from "../screens/MyTourScreen";
 
 import TabButton from "../components/TabButton";
@@ -40,8 +40,8 @@ const AuthNavigator = () => {
           }}
         />
         <Tab.Screen
-          name="TravelScreen"
-          component={TravelScreen}
+          name="MyFavoriteScreen"
+          component={MyFavoriteScreen}
           options={{
             tabBarIcon: ({ color, size }) => (
               <AntDesign name="hearto" color={color} size={size} />
