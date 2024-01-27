@@ -1,5 +1,5 @@
 import { useNavigation } from "@react-navigation/native";
-import { ScrollView, StyleSheet, View } from "react-native";
+import { ScrollView, StyleSheet, View, ActivityIndicator } from "react-native";
 import { width, height, totalSize } from "react-native-dimension";
 
 import colors from "../../config/colors";
@@ -19,10 +19,12 @@ export default function LoginScreen() {
     email: "",
     password: "",
   });
+  const [loading, setLoading] = useState(false);
 
   const { login } = useContext(AuthContext);
 
   const handleLogin = async () => {
+    setLoading(true);
     // login(credentials);
     console.log(credentials);
 
@@ -31,6 +33,7 @@ export default function LoginScreen() {
       toast.show("Please fill in all fields", {
         type: "danger",
       });
+      setLoading(false);
       return;
     }
 
@@ -39,6 +42,7 @@ export default function LoginScreen() {
       toast.show("Please enter a valid email", {
         type: "danger",
       });
+      setLoading(false);
       return;
     }
 
@@ -47,6 +51,7 @@ export default function LoginScreen() {
       toast.show("Password must be at least 6 characters", {
         type: "danger",
       });
+      setLoading(false);
       return;
     }
 
@@ -58,14 +63,17 @@ export default function LoginScreen() {
       if (res) {
         const user = await account.get();
         login(user);
+        setLoading(false);
         toast.show("Logged in successfully", {
           type: "success",
         });
       }
+      setLoading(false);
     } catch (error) {
       toast.show(error.message, {
         type: "danger",
       });
+      setLoading(false);
     }
   };
 
@@ -100,15 +108,19 @@ export default function LoginScreen() {
           Forgot Password?
         </AppText>
 
-        <Button
-          font="Poppins-SemiBold"
-          activeOpacity={0.8}
-          backgroundColor={colors.black}
-          textColor={colors.white}
-          onPress={handleLogin}
-        >
-          Login
-        </Button>
+        {loading ? (
+          <ActivityIndicator size="large" color={colors.black} />
+        ) : (
+          <Button
+            font="Poppins-SemiBold"
+            activeOpacity={0.8}
+            backgroundColor={colors.black}
+            textColor={colors.white}
+            onPress={handleLogin}
+          >
+            Login
+          </Button>
+        )}
         {/* <Button
           font="Poppins-SemiBold"
           activeOpacity={0.8}

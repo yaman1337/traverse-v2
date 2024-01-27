@@ -10,9 +10,11 @@ import Setting from "../components/Setting";
 import Spacer from "../components/Spacer";
 import { SafeAreaView } from "react-native-safe-area-context";
 import UserAvatar from "react-native-user-avatar";
+import { useNavigation } from "@react-navigation/native";
 import { account } from "../lib/appwrite";
 
 export default function ProfileScreen() {
+  const navigation = useNavigation();
   const { user, logout } = useContext(AuthContext);
 
   useEffect(() => {
@@ -51,7 +53,12 @@ export default function ProfileScreen() {
         <View style={styles.settingsContainer}>
           <Setting iconName="user">Edit Profile</Setting>
           <Setting iconName="calendar">Plan Tour</Setting>
-          <Setting iconName="lock">Change Password</Setting>
+          <Setting
+            iconName="lock"
+            onPress={() => navigation.navigate("ChangePasswordScreen")}
+          >
+            Change Password
+          </Setting>
           <Setting iconName="creditcard">Payment Methods</Setting>
           <Setting iconName="staro">Rate Us</Setting>
           <Setting iconName="logout" onPress={() => logout()}>

@@ -13,8 +13,32 @@ import MyFavoriteScreen from "../screens/MyFavoriteScreen";
 import MyTourScreen from "../screens/MyTourScreen";
 
 import TabButton from "../components/TabButton";
+import ChangePasswordScreen from "../screens/ChangePasswordScreen";
 
 const Tab = createBottomTabNavigator();
+
+const ProfileStack = createNativeStackNavigator();
+
+const ProfileStackNavigator = () => {
+  return (
+    <ProfileStack.Navigator initialRouteName="ProfileScreen">
+      <ProfileStack.Screen
+        name="ProfileScreen"
+        component={ProfileScreen}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <ProfileStack.Screen
+        name="ChangePasswordScreen"
+        component={ChangePasswordScreen}
+        options={{
+          headerTitle: "Change Password",
+        }}
+      />
+    </ProfileStack.Navigator>
+  );
+};
 
 const AuthNavigator = () => {
   return (
@@ -70,7 +94,7 @@ const AuthNavigator = () => {
 
         <Tab.Screen
           name="UserSettings"
-          component={ProfileScreen}
+          component={ProfileStackNavigator}
           options={{
             tabBarIcon: ({ color, size }) => (
               <AntDesign name="user" color={color} size={size} />
