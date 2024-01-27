@@ -1,9 +1,10 @@
 import React from 'react';
-import { AppstoreOutlined, SettingOutlined, UserOutlined } from '@ant-design/icons';
+import { SettingOutlined, UserOutlined } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
 import { Avatar, Menu, Typography } from 'antd';
+import { useNavigate } from 'react-router-dom';
 
-const { Text, Link, Title  } = Typography;
+const { Text, Title  } = Typography;
 
 type MenuItem = Required<MenuProps>['items'][number];
 
@@ -36,7 +37,7 @@ const AvatarComponent = ({name, email}: AvatarProps) => {
         <>
         <div className='flex items-center justify-center flex-col h-[35vh]'>
             <Avatar size={120} icon={<UserOutlined />}>{name}</Avatar>
-            <Title level={4}>{name}</Title>
+            <Title level={4} className='mt-4'>{name}</Title>
             <Text>{email}</Text>
         </div>
         </>
@@ -47,38 +48,40 @@ const items: MenuProps['items'] = [
 
     getItem('Dashboard', 'grp', null, 
     [
-        getItem('Favorites', 'favorites'), 
-        getItem('Reviews', 'reviews'),
-        getItem('Contribute', 'contribute'),
+        getItem('Favorites', 'dashboard/favorites'), 
+        getItem('Reviews', 'dashboard/reviews'),
+        getItem('Contribute', 'dashboard/contribute'),
     ], 'group'),
 
     { type: 'divider' },
 
     getItem('Settings', 'sub1', <SettingOutlined />, [
-        getItem('Account', 'account'),
-        getItem('Password', 'change-password'),
+        getItem('Account', 'dashboard/settings/account'),
+        getItem('Password', 'dashboard/settings/change-password'),
     ]),
 ];
 
 export default function Sidebar() {
-  const onClick: MenuProps['onClick'] = (e: EventListener) => {
-    console.log('click ', e);
-    window.location.assign(`/${e.key}`)
-  };
+    const navigate = useNavigate();
 
-  return (
-    <>
-    <div style={{width: 280}} className='bg-white'>
-        <AvatarComponent name='Bibek Shah' email='bibekshah563@gmail.com'/>
-        <Menu
-            onClick={onClick}
-            style={{ width: "100%", height: "55vh" }}
-            // defaultSelectedKeys={['favorites']}
-            defaultOpenKeys={['sub1']}
-            mode="inline"
-            items={items}
-        />
-    </div>
-    </>
-  );
+    const onClick: MenuProps['onClick'] = (e: EventListener) => {
+        console.log('click ', e);
+        navigate(`/${e.key}`)
+    };
+
+    return (
+        <>
+        <div style={{width: 320}} className='bg-white'>
+            <AvatarComponent name='Bibek Shah' email='bibekshah563@gmail.com'/>
+            <Menu
+                onClick={onClick}
+                style={{ width: "100%", height: "55vh" }}
+                // defaultSelectedKeys={['favorites']}
+                defaultOpenKeys={['sub1']}
+                mode="inline"
+                items={items}
+            />
+        </div>
+        </>
+    );
 }
