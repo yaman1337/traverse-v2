@@ -17,9 +17,18 @@ import AppText from "../components/AppText";
 import Button from "../components/Button";
 import AppInput from "../components/AppInput";
 import { AuthContext } from "../../context/AuthContext";
+import { useToast } from "react-native-toast-notifications";
 
 export default function RegisterScreen() {
   const navigation = useNavigation();
+  const toast = useToast();
+  const [credentials, setCredentials] = useState({
+    name: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
+
   //   const { login } = useContext(AuthContext);
   const [image, setImage] = useState(null);
 
@@ -33,6 +42,29 @@ export default function RegisterScreen() {
 
     if (!result.canceled) {
       setImage(result.assets[0].uri);
+    }
+  };
+
+  const handleRegister = () => {
+    console.log(credentials);
+    // check for empty fields
+    if (
+      !credentials.name ||
+      !credentials.email ||
+      !credentials.password ||
+      !credentials.confirmPassword
+    ) {
+      toast.show("Please fill in all fields", {
+        type: "danger",
+      });
+      return;
+    }
+
+    if (credentials.password !== credentials.confirmPassword) {
+      toast.show("Passwords do not match", {
+        type: "danger",
+      });
+      return;
     }
   };
 
@@ -67,17 +99,34 @@ export default function RegisterScreen() {
           )}
         </View>
 
-        <AppInput placeholder="John Doe" />
-        <AppInput placeholder="Email" />
+        <AppInput
+          placeholder="John Doe"
+          onChangeText={(text) =>
+            setCredentials({ ...credentials, name: text })
+          }
+        />
+        <AppInput
+          placeholder="Email"
+          autoCapitalize="none"
+          onChangeText={(text) =>
+            setCredentials({ ...credentials, email: text })
+          }
+        />
         <AppInput
           placeholder="Password"
           secureTextEntry={true}
           autoCapitalize="none"
+          onChangeText={(text) =>
+            setCredentials({ ...credentials, password: text })
+          }
         />
         <AppInput
           placeholder="Confirm Password"
           secureTextEntry={true}
           autoCapitalize="none"
+          onChangeText={(text) =>
+            setCredentials({ ...credentials, confirmPassword: text })
+          }
         />
 
         <Button
@@ -85,7 +134,7 @@ export default function RegisterScreen() {
           activeOpacity={0.8}
           backgroundColor={colors.black}
           textColor={colors.white}
-          onPress={() => login()}
+          onPress={handleRegister}
         >
           Register
         </Button>
