@@ -5,6 +5,8 @@ import { ToastProvider } from "react-native-toast-notifications";
 
 import AuthNavigator from "./src/navigation/AuthNavigation";
 import AuthStack from "./src/navigation/AuthScreen";
+import AuthContextProvider from "./context/AuthContext";
+import AuthRender from "./src/navigation/AuthRender";
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -24,10 +26,11 @@ export default function App() {
 
   return (
     <ToastProvider>
-      <View style={styles.container}>
-        {/* <AuthNavigator /> */}
-        <AuthStack />
-      </View>
+      <AuthContextProvider>
+        <View style={styles.container}>
+          <AuthRender />
+        </View>
+      </AuthContextProvider>
     </ToastProvider>
   );
 }

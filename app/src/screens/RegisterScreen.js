@@ -77,7 +77,7 @@ export default function RegisterScreen() {
         credentials.name
       );
 
-      toast.show("New accoutn created.");
+      toast.show("New account created.");
 
       setTimeout(() => {
         navigation.navigate("Login");

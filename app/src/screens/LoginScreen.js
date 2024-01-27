@@ -20,7 +20,7 @@ export default function LoginScreen() {
     password: "",
   });
 
-  //   const { login } = useContext(AuthContext);
+  const { login } = useContext(AuthContext);
 
   const handleLogin = async () => {
     // login(credentials);
@@ -50,19 +50,22 @@ export default function LoginScreen() {
       return;
     }
 
-
     try {
-
-      const res = await account.createEmailSession(credentials.email, credentials.password);
-      console.log(res);
-      toast.show("Logged in successfully")
-      
+      const res = await account.createEmailSession(
+        credentials.email,
+        credentials.password
+      );
+      if (res) {
+        login(res);
+        toast.show("Logged in successfully", {
+          type: "success",
+        });
+      }
     } catch (error) {
-        toast.show(error.message, {
-          type: "danger"
-        })
+      toast.show(error.message, {
+        type: "danger",
+      });
     }
-
   };
 
   return (
@@ -105,13 +108,13 @@ export default function LoginScreen() {
         >
           Login
         </Button>
-        <Button
+        {/* <Button
           font="Poppins-SemiBold"
           activeOpacity={0.8}
           backgroundColor={colors.black}
           textColor={colors.lightRed2}
           onPress={async () => {
-            console.log(await account.getSession("current"))
+            console.log(await account.getSession("current"));
           }}
         >
           Log session info
@@ -122,12 +125,10 @@ export default function LoginScreen() {
           activeOpacity={0.8}
           backgroundColor={colors.red}
           textColor={colors.white}
-          onPress={async () => {
-            console.log(await account.deleteSession("current"))
-          }}
+          onPress={() => logout()}
         >
           Logout
-        </Button>
+        </Button> */}
 
         <AppText
           variant="Light"

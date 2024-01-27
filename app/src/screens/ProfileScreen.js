@@ -11,7 +11,7 @@ import Spacer from "../components/Spacer";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function ProfileScreen() {
-  //   const { logout } = useContext(AuthContext);
+  const { logout } = useContext(AuthContext);
 
   return (
     <SafeAreaView style={styles.container}>
