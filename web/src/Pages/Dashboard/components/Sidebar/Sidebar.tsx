@@ -51,6 +51,7 @@ const items: MenuProps['items'] = [
         getItem('Favorites', 'dashboard/favorites'), 
         getItem('Reviews', 'dashboard/reviews'),
         getItem('Contribute', 'dashboard/contribute'),
+        getItem('Rewards', 'dashboard/rewards'),
     ], 'group'),
 
     { type: 'divider' },

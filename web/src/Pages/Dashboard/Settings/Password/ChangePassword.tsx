@@ -47,7 +47,7 @@ export default function ChangePassword() {
           <div className="profile-content">
             <div className="change-password-section w-[400px]">
               <div className="input-group">
-                <p className="text-muted"> Old Pssword</p>
+                <p className="text-muted"> Old Password</p>
                 <input
                   type="password"
                   className="old-password"
