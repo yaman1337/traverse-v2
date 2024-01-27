@@ -13,12 +13,14 @@ export default function AppRouter() {
   useEffect(() => {
     (async function () {
       const session = await account.getSession("current");
-      console.log(session)
       if (session.$id) setStatus("authenticated");
       else setStatus("no-authenticated");
     })();
-  }, [setStatus]);
+  }, [status]);
 
+  if (status === "no-authenticated") return
+
+  console.log("randi", status)
   if (status === "checking") return <div className="loading">Checking credentials...</div>;
 
   return (
