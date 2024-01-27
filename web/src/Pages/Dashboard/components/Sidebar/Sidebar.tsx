@@ -1,7 +1,9 @@
 import React from 'react';
-import { AppstoreOutlined, MailOutlined, SettingOutlined } from '@ant-design/icons';
+import { AppstoreOutlined, SettingOutlined, UserOutlined } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
-import { Menu } from 'antd';
+import { Avatar, Menu, Typography } from 'antd';
+
+const { Text, Link, Title  } = Typography;
 
 type MenuItem = Required<MenuProps>['items'][number];
 
@@ -11,6 +13,7 @@ function getItem(
   icon?: React.ReactNode,
   children?: MenuItem[],
   type?: 'group',
+  avatar?: React.ReactNode, // Add an avatar parameter
 ): MenuItem {
   return {
     key,
@@ -18,46 +21,64 @@ function getItem(
     children,
     label,
     type,
+    avatar, // Include the avatar in the returned object
   } as MenuItem;
 }
 
+interface AvatarProps {
+    name: string,
+    email: string
+}
+
+// Placeholder for the AvatarComponent
+const AvatarComponent = ({name, email}: AvatarProps) => {
+    return(
+        <>
+        <div className='flex items-center justify-center flex-col h-[35vh]'>
+            <Avatar size={120} icon={<UserOutlined />}>{name}</Avatar>
+            <Title level={4}>{name}</Title>
+            <Text>{email}</Text>
+        </div>
+        </>
+    )
+};
+
 const items: MenuProps['items'] = [
-  getItem('Navigation One', 'sub1', <MailOutlined />, [
-    getItem('Item 1', 'g1', null, [getItem('Option 1', '1'), getItem('Option 2', '2')], 'group'),
-    getItem('Item 2', 'g2', null, [getItem('Option 3', '3'), getItem('Option 4', '4')], 'group'),
-  ]),
 
-  getItem('Navigation Two', 'sub2', <AppstoreOutlined />, [
-    getItem('Option 5', '5'),
-    getItem('Option 6', '6'),
-    getItem('Submenu', 'sub3', null, [getItem('Option 7', '7'), getItem('Option 8', '8')]),
-  ]),
+    getItem('Dashboard', 'grp', null, 
+    [
+        getItem('Favorites', 'favorites'), 
+        getItem('Reviews', 'reviews'),
+        getItem('Contribute', 'contribute'),
+    ], 'group'),
 
-  { type: 'divider' },
+    { type: 'divider' },
 
-  getItem('Navigation Three', 'sub4', <SettingOutlined />, [
-    getItem('Option 9', '9'),
-    getItem('Option 10', '10'),
-    getItem('Option 11', '11'),
-    getItem('Option 12', '12'),
-  ]),
-
-  getItem('Group', 'grp', null, [getItem('Option 13', '13'), getItem('Option 14', '14')], 'group'),
+    getItem('Settings', 'sub1', <SettingOutlined />, [
+        getItem('Account', 'account'),
+        getItem('Password', 'change-password'),
+    ]),
 ];
 
 export default function Sidebar() {
   const onClick: MenuProps['onClick'] = (e: EventListener) => {
     console.log('click ', e);
+    window.location.assign(`/${e.key}`)
   };
 
   return (
-    <Menu
-      onClick={onClick}
-      style={{ width: 256 }}
-      defaultSelectedKeys={['1']}
-      defaultOpenKeys={['sub1']}
-      mode="inline"
-      items={items}
-    />
+    <>
+    <div style={{width: 280}} className='bg-white'>
+        <AvatarComponent name='Bibek Shah' email='bibekshah563@gmail.com'/>
+        <Menu
+            onClick={onClick}
+            style={{ width: "100%", height: "55vh" }}
+            // defaultSelectedKeys={['favorites']}
+            defaultOpenKeys={['sub1']}
+            mode="inline"
+            items={items}
+        />
+    </div>
+    </>
   );
 }
