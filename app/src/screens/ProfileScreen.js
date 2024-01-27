@@ -8,44 +8,47 @@ import { AuthContext } from "../../context/AuthContext";
 import AppText from "../components/AppText";
 import Setting from "../components/Setting";
 import Spacer from "../components/Spacer";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function ProfileScreen() {
   //   const { logout } = useContext(AuthContext);
 
   return (
-    <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
-      <View style={styles.userProfileContainer}>
-        <Image
-          source={{
-            uri: "https://www.sajjan.tech/_next/image?url=https%3A%2F%2Fres.cloudinary.com%2Fdi8g6lksr%2Fimage%2Fupload%2Fv1702912693%2FWhatsApp_Image_2023-12-18_at_21.00.05_ae115b08_ui2ue0.jpg&w=640&q=75",
-          }}
-          style={styles.userProfileImage}
-        />
-        <AppText variant="SemiBold" style={styles.userProfileName}>
-          Sajjan Karna
+    <SafeAreaView style={styles.container}>
+      <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
+        <View style={styles.userProfileContainer}>
+          <Image
+            source={{
+              uri: "https://www.sajjan.tech/_next/image?url=https%3A%2F%2Fres.cloudinary.com%2Fdi8g6lksr%2Fimage%2Fupload%2Fv1702912693%2FWhatsApp_Image_2023-12-18_at_21.00.05_ae115b08_ui2ue0.jpg&w=640&q=75",
+            }}
+            style={styles.userProfileImage}
+          />
+          <AppText variant="SemiBold" style={styles.userProfileName}>
+            Sajjan Karna
+          </AppText>
+          <AppText variant="Light" style={styles.userEmail}>
+            sajjankarna@gmail.com
+          </AppText>
+        </View>
+
+        <AppText variant="SemiBold" style={styles.settingHeaderTitle}>
+          Settings
         </AppText>
-        <AppText variant="Light" style={styles.userEmail}>
-          sajjankarna@gmail.com
-        </AppText>
-      </View>
 
-      <AppText variant="SemiBold" style={styles.settingHeaderTitle}>
-        Settings
-      </AppText>
+        <View style={styles.settingsContainer}>
+          <Setting iconName="user">Edit Profile</Setting>
+          <Setting iconName="calendar">Plan Tour</Setting>
+          <Setting iconName="lock">Change Password</Setting>
+          <Setting iconName="creditcard">Payment Methods</Setting>
+          <Setting iconName="staro">Rate Us</Setting>
+          <Setting iconName="logout" onPress={() => logout()}>
+            Logout
+          </Setting>
+        </View>
 
-      <View style={styles.settingsContainer}>
-        <Setting iconName="user">Edit Profile</Setting>
-        <Setting iconName="calendar">Plan Tour</Setting>
-        <Setting iconName="lock">Change Password</Setting>
-        <Setting iconName="creditcard">Payment Methods</Setting>
-        <Setting iconName="staro">Rate Us</Setting>
-        <Setting iconName="logout" onPress={() => logout()}>
-          Logout
-        </Setting>
-      </View>
-
-      <Spacer />
-    </ScrollView>
+        <Spacer />
+      </ScrollView>
+    </SafeAreaView>
   );
 }
 
@@ -53,8 +56,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colors.white,
-    paddingHorizontal: width(5),
-    paddingVertical: height(3),
+    paddingHorizontal: width(3),
+    // paddingVertical: height(3),
   },
   userProfileContainer: {
     alignItems: "center",

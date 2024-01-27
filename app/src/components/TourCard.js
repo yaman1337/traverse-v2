@@ -37,6 +37,7 @@ export default function MedicationCard({
 
 const styles = StyleSheet.create({
   tourCard: {
+    width: "100%",
     flexDirection: "row",
     backgroundColor: colors.lightGray,
     borderRadius: totalSize(1),

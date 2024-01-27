@@ -8,6 +8,7 @@ import AppInput from "../components/AppInput";
 import DestinationCard from "../components/DestinationCard";
 import TourCard from "../components/TourCard";
 import Spacer from "../components/Spacer";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function HomeScreen() {
   const [destinations, setDestinations] = useState([
@@ -55,52 +56,54 @@ export default function HomeScreen() {
   ]);
 
   return (
-    <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
-      <AppText variant="Bold" style={styles.screenHeaderTitle}>
-        Recent Visited Destinations
-      </AppText>
+    <SafeAreaView style={styles.container}>
+      <ScrollView showsVerticalScrollIndicator={false}>
+        <AppText variant="Bold" style={styles.screenHeaderTitle}>
+          Recent Visited Destinations
+        </AppText>
 
-      <View style={styles.searchInput}>
-        <AppInput placeholder="Search Destination or Places..." />
-      </View>
+        <View style={styles.searchInput}>
+          <AppInput placeholder="Search Destination or Places..." />
+        </View>
 
-      <AppText variant="Bold" style={styles.screenHeaderTitle}>
-        Recently Visited
-      </AppText>
+        <AppText variant="Bold" style={styles.screenHeaderTitle}>
+          Recently Visited
+        </AppText>
 
-      <ScrollView
-        style={styles.destionationContainer}
-        horizontal
-        showsHorizontalScrollIndicator={false}
-      >
-        {destinations.map((destination) => (
-          <DestinationCard
-            key={destination.name}
-            name={destination.name}
-            address={destination.address}
-            image={destination.image}
-          />
-        ))}
+        <ScrollView
+          style={styles.destionationContainer}
+          horizontal
+          showsHorizontalScrollIndicator={false}
+        >
+          {destinations.map((destination) => (
+            <DestinationCard
+              key={destination.name}
+              name={destination.name}
+              address={destination.address}
+              image={destination.image}
+            />
+          ))}
+        </ScrollView>
+
+        <AppText variant="Bold" style={styles.screenHeaderTitle}>
+          Most Viewed
+        </AppText>
+
+        <View style={styles.tourContainer}>
+          {tours.map((tour) => (
+            <TourCard
+              key={tour.title}
+              title={tour.title}
+              location={tour.location}
+              subtitle={tour.subtitle}
+              image={tour.image}
+            />
+          ))}
+        </View>
+
+        <Spacer size={9} />
       </ScrollView>
-
-      <AppText variant="Bold" style={styles.screenHeaderTitle}>
-        Most Viewed
-      </AppText>
-
-      <View style={styles.tourContainer}>
-        {tours.map((tour) => (
-          <TourCard
-            key={tour.title}
-            title={tour.title}
-            location={tour.location}
-            subtitle={tour.subtitle}
-            image={tour.image}
-          />
-        ))}
-      </View>
-
-      <Spacer size={9} />
-    </ScrollView>
+    </SafeAreaView>
   );
 }
 
@@ -109,7 +112,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: colors.white,
     paddingHorizontal: width(5),
-    paddingTop: height(5),
+    // paddingTop: height(5),
   },
   screenHeaderTitle: {
     fontSize: totalSize(2.5),
