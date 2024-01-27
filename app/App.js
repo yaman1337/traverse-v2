@@ -7,6 +7,7 @@ import AuthNavigator from "./src/navigation/AuthNavigation";
 import AuthStack from "./src/navigation/AuthScreen";
 import AuthContextProvider from "./context/AuthContext";
 import AuthRender from "./src/navigation/AuthRender";
+import DestinationDetailScreen from "./src/screens/DestinationDetailScreen";
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -28,7 +29,8 @@ export default function App() {
     <ToastProvider>
       <AuthContextProvider>
         <View style={styles.container}>
-          <AuthRender />
+          {/* <AuthRender /> */}
+          <DestinationDetailScreen />
         </View>
       </AuthContextProvider>
     </ToastProvider>
