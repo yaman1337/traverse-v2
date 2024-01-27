@@ -36,7 +36,7 @@ const AvatarComponent = ({name, email}: AvatarProps) => {
         <>
         <div className='flex items-center justify-center flex-col h-[35vh]'>
             <Avatar size={120} icon={<UserOutlined />}>{name}</Avatar>
-            <Title level={4}>{name}</Title>
+            <Title level={4} className='mt-4'>{name}</Title>
             <Text>{email}</Text>
         </div>
         </>
