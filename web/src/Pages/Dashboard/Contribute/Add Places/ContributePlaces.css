@@ -1,0 +1,78 @@
+.add-place-section{
+    padding: 2em 4em;
+    width: 100%;
+    height: 72vh;
+    max-height: 72vh;
+    overflow-y: auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+    background-color: white;
+    border: 1px solid #efefefde;
+    box-shadow: 0 5px 10px #dddd;
+    border-radius: 10px;
+}
+
+.add-place-section form{
+    width: 95%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    gap: 2em 5em;
+}
+
+.add-place-section form .arco-form-item-control-wrapper{
+    text-align: left;
+}
+
+.add-place-section form div[role="alert"] {
+	text-align: left;
+	padding-bottom: 1em;
+}
+
+.arco-message-wrapper-top{
+    top: 90px;
+}
+.add-place-section .arco-steps.arco-steps-vertical{
+    border-right: 1px solid #dddd;
+    height: 35vh !important;
+}
+
+.add-place-section form div.item{
+    flex: 1;
+    margin-bottom: 2em;
+}
+
+.add-place-section form div.right{
+    display: flex;
+    flex-direction: column;
+}
+
+/* .add-place-section form input{
+    width: 350px !important;
+} */
+
+@media only screen and (max-width: 900px) {
+    
+}
+
+/* ------------------------------ */
+/* button css */
+
+
+.dashboard-form-submit-btn{
+    all: none !important;
+    padding: 10px 15px;
+    background-color: rgb(33, 33, 33) !important;
+    color: white;
+    border: none;
+    outline: none;
+    border-radius: 2px !important;
+    transition: 0.2s ease;
+  }
+  
+  .dashboard-form-submit-btn:hover{
+    background-color: black;
+    box-shadow: 0 2.5px 5px #868686cc;
+  }
