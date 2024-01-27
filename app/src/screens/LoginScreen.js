@@ -56,7 +56,8 @@ export default function LoginScreen() {
         credentials.password
       );
       if (res) {
-        login(res);
+        const user = await account.get();
+        login(user);
         toast.show("Logged in successfully", {
           type: "success",
         });

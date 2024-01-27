@@ -10,8 +10,13 @@ const AuthContextProvider = ({ children }) => {
   useEffect(() => {
     const getSession = async () => {
       try {
-        const res = await account.getSession("current");
-        setUser(res);
+        const user = await account.get();
+
+        if (!user) {
+          return;
+        }
+
+        setUser(user);
       } catch (error) {
         setError(error.message);
       }

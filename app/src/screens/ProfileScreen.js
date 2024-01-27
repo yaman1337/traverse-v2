@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { Image, ScrollView, StyleSheet, View } from "react-native";
 import { width, height, totalSize } from "react-native-dimension";
 
@@ -9,25 +9,38 @@ import AppText from "../components/AppText";
 import Setting from "../components/Setting";
 import Spacer from "../components/Spacer";
 import { SafeAreaView } from "react-native-safe-area-context";
+import UserAvatar from "react-native-user-avatar";
+import { account } from "../lib/appwrite";
 
 export default function ProfileScreen() {
-  const { logout } = useContext(AuthContext);
+  const { user, logout } = useContext(AuthContext);
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      const result = await account.get();
+      console.log(result);
+    };
+
+    fetchUser();
+  }, []);
 
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
         <View style={styles.userProfileContainer}>
-          <Image
+          {/* <Image
             source={{
               uri: "https://www.sajjan.tech/_next/image?url=https%3A%2F%2Fres.cloudinary.com%2Fdi8g6lksr%2Fimage%2Fupload%2Fv1702912693%2FWhatsApp_Image_2023-12-18_at_21.00.05_ae115b08_ui2ue0.jpg&w=640&q=75",
             }}
             style={styles.userProfileImage}
-          />
+          /> */}
+          <UserAvatar size={100} name={user?.name} />
+
           <AppText variant="SemiBold" style={styles.userProfileName}>
-            Sajjan Karna
+            {user?.name}
           </AppText>
           <AppText variant="Light" style={styles.userEmail}>
-            sajjankarna@gmail.com
+            {user?.email}
           </AppText>
         </View>
 
