@@ -1,12 +1,84 @@
-import { View, Text } from "react-native";
-import React from "react";
+import { useContext } from "react";
+import { Image, ScrollView, StyleSheet, View } from "react-native";
+import { width, height, totalSize } from "react-native-dimension";
 
-const ProfileScreen = () => {
+import colors from "../../config/colors";
+import { AuthContext } from "../../context/AuthContext";
+
+import AppText from "../components/AppText";
+import Setting from "../components/Setting";
+import Spacer from "../components/Spacer";
+
+export default function ProfileScreen() {
+  //   const { logout } = useContext(AuthContext);
+
   return (
-    <View>
-      <Text>ProfileScreen</Text>
-    </View>
-  );
-};
+    <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
+      <View style={styles.userProfileContainer}>
+        <Image
+          source={{
+            uri: "https://www.sajjan.tech/_next/image?url=https%3A%2F%2Fres.cloudinary.com%2Fdi8g6lksr%2Fimage%2Fupload%2Fv1702912693%2FWhatsApp_Image_2023-12-18_at_21.00.05_ae115b08_ui2ue0.jpg&w=640&q=75",
+          }}
+          style={styles.userProfileImage}
+        />
+        <AppText variant="SemiBold" style={styles.userProfileName}>
+          Sajjan Karna
+        </AppText>
+        <AppText variant="Light" style={styles.userEmail}>
+          sajjankarna@gmail.com
+        </AppText>
+      </View>
 
-export default ProfileScreen;
+      <AppText variant="SemiBold" style={styles.settingHeaderTitle}>
+        Settings
+      </AppText>
+
+      <View style={styles.settingsContainer}>
+        <Setting iconName="user">Edit Profile</Setting>
+        <Setting iconName="calendar">Plan Tour</Setting>
+        <Setting iconName="lock">Change Password</Setting>
+        <Setting iconName="creditcard">Payment Methods</Setting>
+        <Setting iconName="staro">Rate Us</Setting>
+        <Setting iconName="logout" onPress={() => logout()}>
+          Logout
+        </Setting>
+      </View>
+
+      <Spacer />
+    </ScrollView>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: colors.white,
+    paddingHorizontal: width(5),
+    paddingVertical: height(3),
+  },
+  userProfileContainer: {
+    alignItems: "center",
+  },
+  userProfileImage: {
+    width: totalSize(13),
+    height: totalSize(13),
+    borderRadius: totalSize(10),
+  },
+  userProfileName: {
+    fontSize: totalSize(2.5),
+    marginTop: height(1),
+  },
+  userEmail: {
+    fontSize: totalSize(1.8),
+    color: colors.darkGray,
+  },
+  settingHeaderTitle: {
+    fontSize: totalSize(2.5),
+    marginTop: height(3),
+  },
+  settingsContainer: {
+    marginTop: height(1),
+    marginHorizontal: width(3),
+    paddingBottom: height(3),
+  },
+});
