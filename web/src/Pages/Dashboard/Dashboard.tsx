@@ -3,7 +3,7 @@
 export default function Dashboard() {
   return (
     <>
-    k cha hau
+    <div className="text-3xl font-bold">Hello Bibek!</div> <br /> <div className="text-xl">Good to see you again. 👋</div>
     </>
   );
 }
