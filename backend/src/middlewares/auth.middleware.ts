@@ -8,15 +8,14 @@ export const isLoggedIn: RequestHandler = async (
   next: NextFunction
 ) => {
   try {
-    const authorization = req.headers.authorization;
+    const authorization = req.headers.authorization?.split(" ")[2];
 
     if (!authorization)
       return res.status(400).json({
         success: false,
         error: "You are not authorized to view the requested resource.",
       });
-
-   req.client = new AppwriteClientWithJwt("")
+    req.client = new AppwriteClientWithJwt(authorization);
     next();
   } catch (error) {
     res.status(500).json({ success: false, error });

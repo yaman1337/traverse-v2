@@ -5,7 +5,8 @@ export const routes = {
     },
     PLACES: {
         GET_ALL_PLACES: "/all",
-        GET_PLACE_BY_ID: "/:id",
-        CREATE_PLACE: "/create"
+        GET_PLACE_BY_ID: "/detail/:id",
+        CREATE_PLACE: "/create",
+        CONTRIBUTIONS: "/contributions"
     }
 }

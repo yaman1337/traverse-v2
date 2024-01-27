@@ -1,7 +1,7 @@
 import sdk, { Client } from "node-appwrite";
-import dotenv from "dotenv"
+import dotenv from "dotenv";
 
-dotenv.config()
+dotenv.config();
 
 const { APPWRITE_ENDPOINT, APPWRITE_PROJECT_ID, APPWRITE_API_KEY } =
   process.env;
@@ -22,7 +22,10 @@ export class AppwriteClientWithJwt {
 
   constructor(jwt: string) {
     this.jwt = jwt;
-    this.client = AppwriteClient.setJWT(this.jwt);
+    this.client = new sdk.Client()
+      .setEndpoint(APPWRITE_ENDPOINT as string)
+      .setProject(APPWRITE_PROJECT_ID as string)
+      .setJWT(this.jwt);
   }
 
   getDatabase() {
@@ -35,5 +38,9 @@ export class AppwriteClientWithJwt {
 
   getStorage() {
     return new sdk.Storage(this.client);
+  }
+
+  getUsers() {
+    return new sdk.Users(this.client);
   }
 }

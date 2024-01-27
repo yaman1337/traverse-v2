@@ -1,2 +1,2 @@
 export { LoginController, RegisterController } from "./auth.controller"
-export { getAllPlaces, getPlaceById, createPlace } from "./places.controller"
+export { getAllPlaces, getPlaceById, createPlace, getContributions } from "./places.controller"
