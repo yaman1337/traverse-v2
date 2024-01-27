@@ -8,7 +8,7 @@ import { useState, useEffect } from "react";
 type Status = "checking" | "authenticated" | "no-authenticated";
 
 export default function AppRouter() {
-  const [status, setStatus] = useState<Status>("checking");
+  const [status, setStatus] = useState<Status>("no-authenticated");
 
   useEffect(() => {
     (async function () {
@@ -16,10 +16,12 @@ export default function AppRouter() {
       if (session.$id) setStatus("authenticated");
       else setStatus("no-authenticated");
     })();
-  }, []);
+  }, [status]);
 
-  if (status === "checking")
-    return <div className="loading">Checking credentials...</div>;
+  if (status === "no-authenticated") return
+
+  console.log("randi", status)
+  if (status === "checking") return <div className="loading">Checking credentials...</div>;
 
   return (
     <>
