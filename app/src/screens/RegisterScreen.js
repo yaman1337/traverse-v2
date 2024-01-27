@@ -5,6 +5,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   View,
+  ActivityIndicator,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { AntDesign } from "@expo/vector-icons";
@@ -30,6 +31,7 @@ export default function RegisterScreen() {
     password: "",
     confirmPassword: "",
   });
+  const [loading, setLoading] = useState(false);
 
   //   const { login } = useContext(AuthContext);
   const [image, setImage] = useState(null);
@@ -48,6 +50,7 @@ export default function RegisterScreen() {
   };
 
   const handleRegister = async () => {
+    setLoading(true);
     console.log(credentials);
     // check for empty fields
     if (
@@ -59,6 +62,7 @@ export default function RegisterScreen() {
       toast.show("Please fill in all fields", {
         type: "danger",
       });
+      setLoading(false);
       return;
     }
 
@@ -66,19 +70,22 @@ export default function RegisterScreen() {
       toast.show("Passwords do not match", {
         type: "danger",
       });
+      setLoading(false);
       return;
     }
 
     try {
-      await account.create(
+      const res = await account.create(
         credentials.username,
         credentials.email,
         credentials.password,
         credentials.name
       );
-
-      toast.show("New account created.");
-
+      if (res) {
+        toast.show("New account created.");
+        setLoading(false);
+      }
+      setLoading(false);
       setTimeout(() => {
         navigation.navigate("Login");
       }, 2000);
@@ -86,6 +93,7 @@ export default function RegisterScreen() {
       toast.show(error.message, {
         type: "danger",
       });
+      setLoading(false);
     }
   };
 
@@ -156,15 +164,19 @@ export default function RegisterScreen() {
           }
         />
 
-        <Button
-          font="Poppins-SemiBold"
-          activeOpacity={0.8}
-          backgroundColor={colors.black}
-          textColor={colors.white}
-          onPress={handleRegister}
-        >
-          Register
-        </Button>
+        {loading ? (
+          <ActivityIndicator size="large" color={colors.black} />
+        ) : (
+          <Button
+            font="Poppins-SemiBold"
+            activeOpacity={0.8}
+            backgroundColor={colors.black}
+            textColor={colors.white}
+            onPress={handleRegister}
+          >
+            Register
+          </Button>
+        )}
 
         <AppText
           variant="Light"
