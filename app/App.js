@@ -1,6 +1,8 @@
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View } from "react-native";
 import { useFonts } from "expo-font";
+import { ToastProvider } from "react-native-toast-notifications";
+
 import AuthNavigator from "./src/navigation/AuthNavigation";
 import AuthStack from "./src/navigation/AuthScreen";
 
@@ -21,10 +23,12 @@ export default function App() {
   }
 
   return (
-    <View style={styles.container}>
-      <AuthNavigator />
-      {/* <AuthStack /> */}
-    </View>
+    <ToastProvider>
+      <View style={styles.container}>
+        {/* <AuthNavigator /> */}
+        <AuthStack />
+      </View>
+    </ToastProvider>
   );
 }
 
