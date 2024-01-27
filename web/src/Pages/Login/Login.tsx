@@ -5,7 +5,7 @@ import LoginArt from "./login-art.svg";
 import "./Login.css";
 
 // arco-design components
-import { Spin, Typography } from "@arco-design/web-react";
+import { Alert, Spin, Typography } from "@arco-design/web-react";
 import { useState } from "react";
 import ForgetPassword from "../ForgetPassword/ForgetPassword";
 import { account } from "../../lib/appwrite";
@@ -22,7 +22,7 @@ export default function Login() {
       await account.createEmailSession(email, password);
       window.location.reload()
     } catch (error) {
-      if (error instanceof Error) alert(error.message);
+      if (error instanceof Error) return <Alert title={error.message} type="error"  />;
     } finally {
       setLoading(false);
     }
