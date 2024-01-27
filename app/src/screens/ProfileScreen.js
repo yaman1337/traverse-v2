@@ -51,7 +51,12 @@ export default function ProfileScreen() {
         </AppText>
 
         <View style={styles.settingsContainer}>
-          <Setting iconName="user">Edit Profile</Setting>
+          <Setting
+            iconName="user"
+            onPress={() => navigation.navigate("EditProfileScreen")}
+          >
+            Edit Profile
+          </Setting>
           <Setting iconName="calendar">Plan Tour</Setting>
           <Setting
             iconName="lock"

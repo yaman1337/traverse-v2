@@ -14,6 +14,7 @@ import MyTourScreen from "../screens/MyTourScreen";
 
 import TabButton from "../components/TabButton";
 import ChangePasswordScreen from "../screens/ChangePasswordScreen";
+import EditProfileScreen from "../screens/EditProfileScreen";
 
 const Tab = createBottomTabNavigator();
 
@@ -27,6 +28,13 @@ const ProfileStackNavigator = () => {
         component={ProfileScreen}
         options={{
           headerShown: false,
+        }}
+      />
+      <ProfileStack.Screen
+        name="EditProfileScreen"
+        component={EditProfileScreen}
+        options={{
+          headerTitle: "Edit Profile",
         }}
       />
       <ProfileStack.Screen
