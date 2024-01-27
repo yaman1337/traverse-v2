@@ -6,7 +6,6 @@ import "./Reviews.css";
 
 // importing arco-design components
 import {
-  Typography,
   Rate,
   Image,
   Button,
@@ -15,11 +14,11 @@ import {
 import { Select, Message } from "@arco-design/web-react";
 
 // importing components
-import Header from "../../../components/Header/Header";
 import RatingInsights from "./Ratings Insights/RatingInsights";
 import DropdownActions from "../components/Actions/Dropdown/DropdownActions";
 import filterData from "./Filters/filterList";
-import { Avatar } from "antd";
+import { Avatar, Typography} from "antd";
+const { Title } = Typography;
 
 const Option = Select.Option;
 const options = ["Recent", "Ratings", "Oldest"];
@@ -30,7 +29,29 @@ const actions = {
 
 const Reviews = () => {
   const [loading, setLoading] = useState(false);
-  const [reviews, setReviews] = useState([]);
+  const [reviews, setReviews] = useState([
+    {
+      $id: "1",
+      title: "Bouddha Stupa",
+      location_description: "Kathmandu, Nepal",
+      rating: 5,
+      $createdAt: "2023-01-15T10:30:00Z",
+      review_description: "I had an incredible experience at this place. Highly recommended!",
+      place_id: "123",
+      image: ["https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT8oSk8DuSKi6kL45GI5kJCEDKbaFtsnGYSCg&usqp=CAU"],
+    },
+    {
+      $id: "2",
+      title: "Bhaktapur Durbar Square",
+      location_description: "Bhaktapur, Nepal",
+      rating: 4,
+      $createdAt: "2023-02-20T15:45:00Z",
+      review_description: "Enjoyed my time here. The service was good, and the ambiance was pleasant.",
+      place_id: "456",
+      image: ["https://hsj.com.np/uploads/0000/1/2023/08/06/bhaktapur-rainy.jpg",],
+    },
+    // Add more reviews as needed
+  ]);
   const [insights, setInsights] = useState({
     totalReviewsPublished: 0,
     oneStar: 0,
@@ -166,9 +187,9 @@ const Reviews = () => {
             <div className="review-list flex-2">
               <div className="header-block">
                 <div className="content-header">
-                  <Typography.Title heading={5} className="ms-4 label-header">
+                  <Title level={3} className="ms-4 p-3 mb-0 label-header">
                     Reviews
-                  </Typography.Title>
+                  </Title>
                 </div>
                 <div className="filter-buttons">
                   <Select
@@ -191,25 +212,23 @@ const Reviews = () => {
               {loading === true ? (
                 <Spin className="ms-4 mt-3 mb-4" />
               ) : reviews.length === 0 ? (
-                <Typography.Title className="ms-4 pb-3" heading={6} bold>
+                <Title className="ms-4 pb-3" level={5} bold>
                   No reviews posted yet
-                </Typography.Title>
+                </Title>
               ) : (
                 reviews.map((item: any) => {
                   return (
                     <div className="review" key={item?.$id}>
                       <div className="left">
                         <div className="avatar">
-                          <Avatar size={40}>{data?.full_name}</Avatar>
+                          <Avatar size={40}>{"BS"}</Avatar>
                         </div>
                       </div>
                       <div className="row-right">
                         <div className="right">
                           <div className="review-header">
-                            <div className="place-details">
-                              <Typography.Title heading={6} className="my-0 ">
-                                {item?.title}
-                              </Typography.Title>
+                            <div className="place-details m-0">
+                              <Title level={5} className="mb-0" style={{margin: "0 !important"}}>{item?.title}</Title>
                               <Typography.Text type="secondary">
                                 {item?.location_description}
                               </Typography.Text>
@@ -239,7 +258,7 @@ const Reviews = () => {
 
                           <button 
                           onClick={() => navigate(`/place?id=${item?.place_id}`)}
-                          className="btn btn-dark shadow-sm view-review-btn">
+                          className="btn bg-black text-white shadow-sm view-review-btn">
                               View Details
                           </button>
                         </div>
@@ -282,9 +301,9 @@ const Reviews = () => {
             <div className="review-details flex-1">
               <div className="header-block">
                 <div className="content-header">
-                  <Typography.Title heading={5} className="my-0 mb-1">
+                  <Title level={5} className="my-0 mb-1">
                     Insights
-                  </Typography.Title>
+                  </Title>
                   <Typography.Text type="secondary">
                     General overview of reviews published
                   </Typography.Text>
@@ -292,16 +311,16 @@ const Reviews = () => {
               </div>
 
               <div className="insights-details">
-                <Typography.Title heading={6} className="my-0">
+                <Title level={5} className="my-0">
                   {insights.totalReviewsPublished} reviews published
-                </Typography.Title>
+                </Title>
                 <RatingInsights insights={insights} />
               </div>
 
               <div className="bottom-block">
-                <Typography.Title heading={6} className="mt-4 mb-1">
+                <Title level={5} className="mt-4 mb-1">
                   Write more reviews?
-                </Typography.Title>
+                </Title>
                 <Typography.Text type="secondary">
                   Explore featured collections on Traverse
                 </Typography.Text>
