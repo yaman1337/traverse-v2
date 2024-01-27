@@ -18,11 +18,13 @@ import Button from "../components/Button";
 import AppInput from "../components/AppInput";
 import { AuthContext } from "../../context/AuthContext";
 import { useToast } from "react-native-toast-notifications";
+import { account } from "../lib/appwrite";
 
 export default function RegisterScreen() {
   const navigation = useNavigation();
   const toast = useToast();
   const [credentials, setCredentials] = useState({
+    username: "",
     name: "",
     email: "",
     password: "",
@@ -45,7 +47,7 @@ export default function RegisterScreen() {
     }
   };
 
-  const handleRegister = () => {
+  const handleRegister = async () => {
     console.log(credentials);
     // check for empty fields
     if (
@@ -66,6 +68,25 @@ export default function RegisterScreen() {
       });
       return;
     }
+
+    try {
+      await account.create(
+        credentials.username,
+        credentials.email,
+        credentials.password,
+        credentials.name
+      );
+
+      toast.show("New accoutn created.");
+
+      setTimeout(() => {
+        navigation.navigate("Login");
+      }, 2000);
+    } catch (error) {
+      toast.show(error.message, {
+        type: "danger",
+      });
+    }
   };
 
   return (
@@ -77,7 +98,7 @@ export default function RegisterScreen() {
       {/* Form  */}
       <View style={styles.formContainer}>
         {/* Image Picker  */}
-        <View style={styles.imagePickerContainer}>
+        {/* <View style={styles.imagePickerContainer}>
           {!image ? (
             <>
               <TouchableOpacity
@@ -97,12 +118,18 @@ export default function RegisterScreen() {
               <Image source={{ uri: image }} style={styles.profileImage} />
             </TouchableOpacity>
           )}
-        </View>
+        </View> */}
 
         <AppInput
           placeholder="John Doe"
           onChangeText={(text) =>
             setCredentials({ ...credentials, name: text })
+          }
+        />
+        <AppInput
+          placeholder="Username"
+          onChangeText={(text) =>
+            setCredentials({ ...credentials, username: text })
           }
         />
         <AppInput
