@@ -104,7 +104,7 @@ export default function Footer() {
               </p>
             </div>
             <div>
-              <p className="footer-company-name">Traverse &copy; 2023</p>
+              <p className="footer-company-name">Traverse &copy; 2024</p>
             </div>
             <div className="payment-method">
               <img src={PaymentMethod} alt="payment method" />
