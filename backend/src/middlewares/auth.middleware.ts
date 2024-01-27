@@ -1,12 +1,9 @@
-import { NextFunction, Request, Response } from "express";
+import { NextFunction, Request, RequestHandler, Response } from "express";
 import { AppwriteClientWithJwt } from "../appwrite-sdk";
+import { CustomRequest } from "../@types/express";
 
-interface AuthMiddlewareRequest extends Request {
-  client: AppwriteClientWithJwt;
-}
-
-export const isLoggedIn = async (
-  req: AuthMiddlewareRequest,
+export const isLoggedIn: RequestHandler = async (
+  req: CustomRequest,
   res: Response,
   next: NextFunction
 ) => {
@@ -19,7 +16,7 @@ export const isLoggedIn = async (
         error: "You are not authorized to view the requested resource.",
       });
 
-    req.client = new AppwriteClientWithJwt(authorization);
+   req.client = new AppwriteClientWithJwt("")
     next();
   } catch (error) {
     res.status(500).json({ success: false, error });
