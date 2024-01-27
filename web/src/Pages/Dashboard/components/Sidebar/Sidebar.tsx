@@ -74,7 +74,7 @@ export default function Sidebar() {
             <AvatarComponent name='Bibek Shah' email='bibekshah563@gmail.com'/>
             <Menu
                 onClick={onClick}
-                style={{ width: "100%", height: "55vh", fontWeight: 500, fontFamily: "'Roboto', sans-serif" }}
+                style={{ width: "100%", height: "55vh", fontWeight: 400, fontFamily: "'Roboto', sans-serif" }}
                 // defaultSelectedKeys={['favorites']}
                 defaultOpenKeys={['sub1']}
                 mode="inline"
