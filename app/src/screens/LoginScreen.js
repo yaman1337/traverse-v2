@@ -10,6 +10,7 @@ import Button from "../components/Button";
 import { useContext, useState } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import { useToast } from "react-native-toast-notifications";
+import { account } from "../lib/appwrite";
 
 export default function LoginScreen() {
   const toast = useToast();
@@ -21,7 +22,7 @@ export default function LoginScreen() {
 
   //   const { login } = useContext(AuthContext);
 
-  const handleLogin = () => {
+  const handleLogin = async () => {
     // login(credentials);
     console.log(credentials);
 
@@ -48,6 +49,20 @@ export default function LoginScreen() {
       });
       return;
     }
+
+
+    try {
+
+      const res = await account.createEmailSession(credentials.email, credentials.password);
+      console.log(res);
+      toast.show("Logged in successfully")
+      
+    } catch (error) {
+        toast.show(error.message, {
+          type: "danger"
+        })
+    }
+
   };
 
   return (
@@ -89,6 +104,29 @@ export default function LoginScreen() {
           onPress={handleLogin}
         >
           Login
+        </Button>
+        <Button
+          font="Poppins-SemiBold"
+          activeOpacity={0.8}
+          backgroundColor={colors.black}
+          textColor={colors.lightRed2}
+          onPress={async () => {
+            console.log(await account.getSession("current"))
+          }}
+        >
+          Log session info
+        </Button>
+
+        <Button
+          font="Poppins-SemiBold"
+          activeOpacity={0.8}
+          backgroundColor={colors.red}
+          textColor={colors.white}
+          onPress={async () => {
+            console.log(await account.deleteSession("current"))
+          }}
+        >
+          Logout
         </Button>
 
         <AppText

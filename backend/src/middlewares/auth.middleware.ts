@@ -1,8 +1,8 @@
 import { NextFunction, Request, Response } from "express";
-import { AppwriteClient } from "../appwrite-sdk";
+import { AppwriteClientWithJwt } from "../appwrite-sdk";
 
 interface AuthMiddlewareRequest extends Request {
-  client: AppwriteClient;
+  client: AppwriteClientWithJwt;
 }
 
 export const isLoggedIn = async (
@@ -14,14 +14,12 @@ export const isLoggedIn = async (
     const authorization = req.headers.authorization;
 
     if (!authorization)
-      return res
-        .status(400)
-        .json({
-          success: false,
-          error: "You are not authorized to view the requested resource.",
-        });
+      return res.status(400).json({
+        success: false,
+        error: "You are not authorized to view the requested resource.",
+      });
 
-    req.client = new AppwriteClient(authorization);
+    req.client = new AppwriteClientWithJwt(authorization);
     next();
   } catch (error) {
     res.status(500).json({ success: false, error });
