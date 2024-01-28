@@ -1,6 +1,6 @@
 function filterByActive(params: { data: any[] }) {
   const { data } = params;
-  const newData = data.filter((item) => item.status === "active");
+  const newData = data.filter((item) => item?.status === "active");
   return newData;
 }
 

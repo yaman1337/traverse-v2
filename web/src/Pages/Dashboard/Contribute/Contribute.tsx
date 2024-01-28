@@ -18,9 +18,9 @@ export default function Contribute() {
             <div className="profile-section">
               <div className="profile-content">
                 <div className="contributed-places-wrapper">
-                  <button onClick={async () => {
-                    console.log(await account.createJWT())
-                  }} >Create jwt</button>
+                  {/* <button onClick={async () => {
+                    await account.createJWT()
+                  }} >Create jwt</button> */}
                     <Tabs defaultActiveTab='contributed_places' style={{width: '100%'}}>
                         <TabPane key='contributed_places' title='Places Contributed'>
                             <ListPlaces />
