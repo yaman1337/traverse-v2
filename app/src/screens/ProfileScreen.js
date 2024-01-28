@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: colors.white,
     paddingHorizontal: width(3),
-    // paddingVertical: height(3),
+    paddingVertical: height(2),
   },
   userProfileContainer: {
     alignItems: "center",

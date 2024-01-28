@@ -44,6 +44,6 @@ const styles = StyleSheet.create({
     marginVertical: height(1),
   },
   buttonText: {
-    fontSize: totalSize(2),
+    fontSize: totalSize(1.8),
   },
 });
