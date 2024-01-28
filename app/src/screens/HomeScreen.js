@@ -97,7 +97,7 @@ export default function HomeScreen() {
           horizontal
           showsHorizontalScrollIndicator={false}
         >
-          {destinations.splice(0, 3).map((destination) => (
+          {destinations.slice(3, 5).map((destination) => (
             <DestinationCard
               key={destination.$id}
               name={destination.title}
@@ -117,20 +117,26 @@ export default function HomeScreen() {
         </AppText>
 
         <View style={styles.tourContainer}>
-          {destinations.splice(0, 5).map((tour) => (
-            <TourCard
-              key={tour.$id}
-              title={tour.title}
-              location={tour.location_description}
-              subtitle={tour.keyword}
-              image={tour.image[0]}
-              onPress={() =>
-                navigation.navigate("DestinationDetailScreen", {
-                  id: tour.$id,
-                })
-              }
-            />
-          ))}
+          {
+            // filter the destination which has category Most_viewed
+            destinations
+              .filter((destination) => destination.keyword === "Most_viewed")
+              // slice the first 5 destinations
+              .map((tour) => (
+                <TourCard
+                  key={tour.$id}
+                  title={tour.title}
+                  location={tour.location_description}
+                  // subtitle={false}
+                  image={tour.image[0]}
+                  onPress={() =>
+                    navigation.navigate("DestinationDetailScreen", {
+                      id: tour.$id,
+                    })
+                  }
+                />
+              ))
+          }
         </View>
 
         <Spacer size={9} />
