@@ -57,6 +57,18 @@ export const createReview = async (req: CustomRequest, res: Response) => {
       payload.place_id
     );
 
+    let { total_reviews, average_rating } = placeInfo;
+
+    total_reviews = +total_reviews + 1;
+    average_rating = ((average_rating + rating) / 2).toFixed(1);
+
+    await database.updateDocument(
+      databaseConfig.databaseId,
+      databaseConfig.placesCollectionId,
+      placeInfo.$id,
+      { average_rating, total_reviews }
+    );
+
     let rewardPayload = {
       place_id: payload.place_id,
       point: rewardPoint,

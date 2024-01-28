@@ -1,13 +1,9 @@
-import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View } from "react-native";
 import { useFonts } from "expo-font";
 import { ToastProvider } from "react-native-toast-notifications";
 
-import AuthNavigator from "./src/navigation/AuthNavigation";
-import AuthStack from "./src/navigation/AuthScreen";
 import AuthContextProvider from "./context/AuthContext";
 import AuthRender from "./src/navigation/AuthRender";
-import DestinationDetailScreen from "./src/screens/DestinationDetailScreen";
 
 export default function App() {
   const [fontsLoaded] = useFonts({

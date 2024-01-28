@@ -16,18 +16,21 @@ export default function HomeScreen() {
   const navigation = useNavigation();
   const [destinations, setDestinations] = useState([
     {
+      $id: "1",
       name: "Paris",
       address: "33 Sukhumvit 3, Klongtoey Nuea, Bangkok 10110",
       image:
         "https://images.pexels.com/photos/1308940/pexels-photo-1308940.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
     },
     {
+      $id: "2",
       name: "Rome",
       address: "#2 in Best Places to Visit in Europe for 2023-2024",
       image:
         "https://images.pexels.com/photos/753639/pexels-photo-753639.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
     },
     {
+      $id: "3",
       name: "Swiss Alps",
       address: "600 N Wolfe St, Baltimore, MD 21287",
       image:
@@ -36,6 +39,7 @@ export default function HomeScreen() {
   ]);
   const [tours, setTours] = useState([
     {
+      $id: "1",
       title: "Brandenburg Gate",
       location: "Pariser Platz, 10117 Berlin, Germany",
       subtitle: "Historical place",
@@ -43,6 +47,7 @@ export default function HomeScreen() {
         "https://lh5.googleusercontent.com/p/AF1QipNaifG9JhlSPzLGHOn6hFKSlGWaXXhaIrPeCMdU=w408-h272-k-no",
     },
     {
+      $id: "2",
       title: "Neuschwanstein Castle",
       location: "Neuschwansteinstraße 20, Germany",
       subtitle: "Castle",
@@ -50,6 +55,7 @@ export default function HomeScreen() {
         "https://lh5.googleusercontent.com/p/AF1QipOkBJCFelrfrrAn4gol-UuOyFmghhN7rgVNbaIv=w408-h304-k-no",
     },
     {
+      $id: "3",
       title: "Reichstag Building",
       location: "Platz der Republik 1, Germany",
       subtitle: "Government office",
@@ -72,7 +78,7 @@ export default function HomeScreen() {
     <SafeAreaView style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false}>
         <AppText variant="Bold" style={styles.screenHeaderTitle}>
-          Recent Visited Destinations
+          Search Your Destinations
         </AppText>
 
         <View style={styles.searchInput}>
@@ -91,7 +97,7 @@ export default function HomeScreen() {
           horizontal
           showsHorizontalScrollIndicator={false}
         >
-          {destinations.map((destination) => (
+          {destinations.slice(3, 5).map((destination) => (
             <DestinationCard
               key={destination.$id}
               name={destination.title}
@@ -111,16 +117,26 @@ export default function HomeScreen() {
         </AppText>
 
         <View style={styles.tourContainer}>
-          {tours.map((tour) => (
-            <TourCard
-              key={tour.title}
-              title={tour.title}
-              location={tour.location}
-              subtitle={tour.subtitle}
-              image={tour.image}
-              onPress={() => navigation.navigate("DestinationDetailScreen")}
-            />
-          ))}
+          {
+            // filter the destination which has category Most_viewed
+            destinations
+              .filter((destination) => destination.keyword === "Most_viewed")
+              // slice the first 5 destinations
+              .map((tour) => (
+                <TourCard
+                  key={tour.$id}
+                  title={tour.title}
+                  location={tour.location_description}
+                  // subtitle={false}
+                  image={tour.image[0]}
+                  onPress={() =>
+                    navigation.navigate("DestinationDetailScreen", {
+                      id: tour.$id,
+                    })
+                  }
+                />
+              ))
+          }
         </View>
 
         <Spacer size={9} />

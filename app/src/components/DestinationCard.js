@@ -1,4 +1,4 @@
-import { Image, StyleSheet, Text, TouchableOpacity } from "react-native";
+import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { width, height, totalSize } from "react-native-dimension";
 import colors from "../../config/colors";
 import AppText from "./AppText";
@@ -15,12 +15,14 @@ export default function DestinationCard({
       activeOpacity={0.8}
       onPress={onPress}
     >
-      <Image
-        source={{
-          uri: image,
-        }}
-        style={styles.destinationImage}
-      />
+      <View style={styles.destinationImageContainer}>
+        <Image
+          source={{
+            uri: image,
+          }}
+          style={styles.destinationImage}
+        />
+      </View>
 
       <AppText variant="Bold" style={styles.destinationName}>
         {name}
@@ -40,9 +42,15 @@ const styles = StyleSheet.create({
     marginBottom: height(1),
     marginRight: width(5),
   },
+  destinationImageContainer: {
+    width: width(50),
+    height: height(20),
+    overflow: "hidden",
+    borderRadius: totalSize(1),
+  },
   destinationImage: {
     width: "100%",
-    height: height(20),
+    height: "100%",
     borderRadius: totalSize(1),
   },
   destinationName: {

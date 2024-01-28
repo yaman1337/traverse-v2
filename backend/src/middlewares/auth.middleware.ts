@@ -8,8 +8,7 @@ export const isLoggedIn: RequestHandler = async (
   next: NextFunction
 ) => {
   try {
-    const authorization = req.headers.authorization?.split(" ")[2];
-
+    const authorization = req.headers.authorization?.split(" ")[1];
     if (!authorization)
       return res.status(400).json({
         success: false,
