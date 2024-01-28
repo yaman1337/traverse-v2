@@ -22,7 +22,7 @@ export default function FavoriteCard({
           backgroundColor: backgroundColor ? backgroundColor : colors.lightGray,
         },
       ]}
-      onPress={onPress}
+      onLongPress={onPress}
       activeOpacity={0.4}
     >
       {image && (
@@ -64,6 +64,7 @@ const styles = StyleSheet.create({
   favoriteImage: {
     width: totalSize(9),
     height: totalSize(9),
+    borderRadius: totalSize(1),
   },
   favoriteTitle: {
     marginTop: height(1.2),

@@ -1,6 +1,13 @@
 import { AntDesign } from "@expo/vector-icons";
-import { useState } from "react";
-import { StyleSheet, View, ScrollView, Modal, Image } from "react-native";
+import { useEffect, useState } from "react";
+import {
+  StyleSheet,
+  View,
+  ScrollView,
+  Modal,
+  Image,
+  Alert,
+} from "react-native";
 import { width, height, totalSize } from "react-native-dimension";
 
 import colors from "../../config/colors";
@@ -9,9 +16,19 @@ import Button from "../components/Button";
 import FavoriteCard from "../components/FavoriteCard";
 import Spacer from "../components/Spacer";
 import { SafeAreaView } from "react-native-safe-area-context";
+import {
+  getFavoriteDestination,
+  removeAllFavoriteDestination,
+  removeFavoriteDestination,
+} from "../../config/storage";
+import { useNavigation } from "@react-navigation/native";
+import { useToast } from "react-native-toast-notifications";
 
 export default function MyFavoriteScreen() {
+  const navigation = useNavigation();
+  const toast = useToast();
   const [showModal, setShowModal] = useState(false);
+  const [favorites, setFavorites] = useState([]);
   const [focusedFavorite, setFocusedFavorite] = useState(null);
   const [destinations, setDestinations] = useState([
     {
@@ -53,6 +70,47 @@ export default function MyFavoriteScreen() {
     // Add more destinations as needed
   ]);
 
+  useEffect(() => {
+    async function getFavorites() {
+      const faovorites = await getFavoriteDestination();
+      console.log(faovorites);
+      setFavorites(faovorites);
+    }
+    // refresh the list of favorites when the screen is focused
+    navigation.addListener("focus", () => {
+      getFavorites();
+    });
+
+    getFavorites();
+    // return unsubscribe;
+  }, []);
+
+  const handleRemoveFavorite = async (id) => {
+    Alert.alert(
+      "Remove Favorite",
+      "Are you sure you want to remove this destination from your favorite list?",
+      [
+        {
+          text: "Cancel",
+          onPress: () => {},
+          style: "cancel",
+        },
+        {
+          text: "Remove",
+          onPress: async () => {
+            const newFav = await removeFavoriteDestination(id);
+            setFavorites(newFav);
+            toast.show("Destination removed from your favorite list", {
+              type: "success",
+              duration: 2000,
+            });
+          },
+          style: "destructive",
+        },
+      ]
+    );
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -61,17 +119,23 @@ export default function MyFavoriteScreen() {
         </AppText>
 
         <View style={styles.reportContainer}>
-          {destinations.map((destination) => (
-            <FavoriteCard
-              key={destination.id}
-              image={destination.image}
-              subText={destination.subText}
-              onPress={destination.onPress}
-              variant="SemiBold"
-            >
-              {destination.title}
-            </FavoriteCard>
-          ))}
+          {favorites?.length > 0 ? (
+            favorites.map((fav) => (
+              <FavoriteCard
+                key={fav.id}
+                image={fav.image}
+                subText={fav.location}
+                onPress={() => handleRemoveFavorite(fav.id)}
+                variant="SemiBold"
+              >
+                {fav.title}
+              </FavoriteCard>
+            ))
+          ) : (
+            <AppText variant="Bold" style={styles.screenHeaderTitle}>
+              No Favorites Added Yet
+            </AppText>
+          )}
 
           {/* <Button backgroundColor={colors.black} textColor={colors.white}>
             Share Report
