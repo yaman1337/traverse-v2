@@ -9,9 +9,14 @@ export default function MedicationCard({
   location = "location",
   subtitle = "Subtitle",
   image = "https://integratedlaboratories.in/wp-content/uploads/2022/08/Paracetamol-500mg-Tablets-Intemol-500-2.jpeg",
+  onPress = () => {},
 }) {
   return (
-    <TouchableOpacity style={styles.tourCard} activeOpacity={0.7}>
+    <TouchableOpacity
+      style={styles.tourCard}
+      activeOpacity={0.7}
+      onPress={onPress}
+    >
       <View style={styles.tourCardImageContainer}>
         <Image
           style={styles.tourCardImage}

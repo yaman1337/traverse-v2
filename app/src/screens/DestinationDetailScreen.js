@@ -15,8 +15,11 @@ import UserAvatar from "react-native-user-avatar";
 import AppText from "../components/AppText";
 import colors from "../../config/colors";
 import { useState } from "react";
+import Spacer from "../components/Spacer";
+import { useNavigation } from "@react-navigation/native";
 
 const DestinationDetailScreen = () => {
+  const navigation = useNavigation();
   const [reviews, setReviews] = useState([
     {
       id: 1,
@@ -42,6 +45,7 @@ const DestinationDetailScreen = () => {
         <TouchableOpacity
           style={styles.backButtonContainer}
           activeOpacity={0.5}
+          onPress={() => navigation.goBack()}
         >
           <AntDesign name="arrowleft" size={24} color="white" />
         </TouchableOpacity>
@@ -188,6 +192,8 @@ const DestinationDetailScreen = () => {
           ))}
         </View>
       </ScrollView>
+
+      <Spacer height={height(5)} />
     </SafeAreaView>
   );
 };

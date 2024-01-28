@@ -9,8 +9,10 @@ import DestinationCard from "../components/DestinationCard";
 import TourCard from "../components/TourCard";
 import Spacer from "../components/Spacer";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { useNavigation } from "@react-navigation/native";
 
 export default function HomeScreen() {
+  const navigation = useNavigation();
   const [destinations, setDestinations] = useState([
     {
       name: "Paris",
@@ -63,7 +65,10 @@ export default function HomeScreen() {
         </AppText>
 
         <View style={styles.searchInput}>
-          <AppInput placeholder="Search Destination or Places..." />
+          <AppInput
+            placeholder="Search Destination or Places..."
+            onPressIn={() => navigation.navigate("SearchDestinationScreen")}
+          />
         </View>
 
         <AppText variant="Bold" style={styles.screenHeaderTitle}>
@@ -81,6 +86,7 @@ export default function HomeScreen() {
               name={destination.name}
               address={destination.address}
               image={destination.image}
+              onPress={() => navigation.navigate("DestinationDetailScreen")}
             />
           ))}
         </ScrollView>
@@ -97,6 +103,7 @@ export default function HomeScreen() {
               location={tour.location}
               subtitle={tour.subtitle}
               image={tour.image}
+              onPress={() => navigation.navigate("DestinationDetailScreen")}
             />
           ))}
         </View>

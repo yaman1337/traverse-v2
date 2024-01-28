@@ -29,8 +29,8 @@ export default function App() {
     <ToastProvider>
       <AuthContextProvider>
         <View style={styles.container}>
-          {/* <AuthRender /> */}
-          <DestinationDetailScreen />
+          <AuthRender />
+          {/* <DestinationDetailScreen /> */}
         </View>
       </AuthContextProvider>
     </ToastProvider>
