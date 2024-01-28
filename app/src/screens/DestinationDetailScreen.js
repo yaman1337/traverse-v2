@@ -5,6 +5,8 @@ import {
   TouchableOpacity,
   Image,
   ScrollView,
+  Linking,
+  Platform,
 } from "react-native";
 import { width, height, totalSize } from "react-native-dimension";
 import { AntDesign } from "@expo/vector-icons";
@@ -14,12 +16,16 @@ import UserAvatar from "react-native-user-avatar";
 
 import AppText from "../components/AppText";
 import colors from "../../config/colors";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Spacer from "../components/Spacer";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
+import { getPlaceDetails } from "../../config/api";
 
 const DestinationDetailScreen = () => {
+  const route = useRoute();
   const navigation = useNavigation();
+  const { id } = route.params;
+  const [place, setPlace] = useState({});
   const [reviews, setReviews] = useState([
     {
       id: 1,
@@ -39,6 +45,31 @@ const DestinationDetailScreen = () => {
     },
   ]);
 
+  useEffect(() => {
+    async function fetchPlaceDetail() {
+      const result = await getPlaceDetails(id);
+      console.log(result);
+      setPlace(result?.documents[0]);
+    }
+    fetchPlaceDetail();
+  }, []);
+
+  const handleOnViewInMapPress = () => {
+    // open google map via linking using places?.coordinate[lat, long]
+    const scheme = Platform.select({
+      ios: "maps:0,0?q=",
+      android: "geo:0,0?q=",
+    });
+    const latLng = `${place?.coordinates[0]},${place?.coordinates[1]}`;
+    const label = place?.title;
+    const url = Platform.select({
+      ios: `${scheme}${label}@${latLng}`,
+      android: `${scheme}${latLng}(${label})`,
+    });
+
+    Linking.openURL(url);
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.headerNavigationContainer}>
@@ -51,7 +82,7 @@ const DestinationDetailScreen = () => {
         </TouchableOpacity>
         <View style={styles.headerTitleContainer}>
           <AppText variant="SemiBold" style={styles.headerTitle}>
-            KedarNath Temple
+            {place?.title}
           </AppText>
         </View>
 
@@ -67,29 +98,31 @@ const DestinationDetailScreen = () => {
         <View style={styles.destinationImageContainer}>
           <Image
             source={{
-              uri: "https://cloud.appwrite.io/v1/storage/buckets/traverse/files/6489f447aa9ee5fdc82f/view?project=64777ba0910c827a975b&mode=admin",
+              uri: place?.image[0],
             }}
             style={styles.destinationImage}
           />
         </View>
-        <View style={styles.verifiedBadgeContainer}>
-          <AntDesign name="checkcircle" size={24} color="green" />
-          <AppText variant="Medium" style={styles.verifiedBadgeText}>
-            Verified
-          </AppText>
-        </View>
+        {place?.verification_status && (
+          <View style={styles.verifiedBadgeContainer}>
+            <AntDesign name="checkcircle" size={24} color="green" />
+            <AppText variant="Medium" style={styles.verifiedBadgeText}>
+              Verified
+            </AppText>
+          </View>
+        )}
         <View style={styles.destinationInfoContainer}>
           <View style={styles.destinationInfo}>
             <AppText variant="SemiBold" style={styles.destinationName}>
-              KedarNath Temple
+              {place?.title}
             </AppText>
             <AppText variant="Medium" style={styles.destinationCountry}>
-              India
+              {place?.location_description}
             </AppText>
           </View>
           <View style={styles.badgeKeyword}>
             <AppText variant="Medium" style={styles.badgeKeywordText}>
-              Historical
+              {place?.keyword}
             </AppText>
           </View>
         </View>
@@ -100,7 +133,7 @@ const DestinationDetailScreen = () => {
               Posted By
             </AppText>
             <AppText variant="Medium" style={styles.postedByText}>
-              Saurav
+              {place?.author_id}
             </AppText>
           </View>
         </View>
@@ -108,18 +141,22 @@ const DestinationDetailScreen = () => {
           <View style={styles.ratingContainer}>
             <AirbnbRating
               count={5}
-              defaultRating={4.7}
+              defaultRating={place?.average_rating}
               size={15}
               showRating={false}
               isDisabled={true}
             />
             <AppText variant="Regular" style={styles.ratingText}>
-              4.7 star average rating
+              {place?.average_rating} star average rating (
+              {place?.total_reviews})
             </AppText>
           </View>
         </View>
 
-        <TouchableOpacity style={styles.viewInMapContainer}>
+        <TouchableOpacity
+          style={styles.viewInMapContainer}
+          onPress={handleOnViewInMapPress}
+        >
           <AppText variant="SemiBold" style={styles.viewInMapText}>
             View in Map
           </AppText>
@@ -130,30 +167,7 @@ const DestinationDetailScreen = () => {
             About the Destination
           </AppText>
           <AppText variant="Light" style={styles.aboutDestination}>
-            Located in the Rudraprayag district of Uttarakhand, India, the
-            Kedarnath Temple stands as a revered Hindu pilgrimage site and holds
-            profound spiritual significance. Situated at an elevation of 3,583
-            meters (11,755 feet), amidst the majestic Garhwal Himalayas, this
-            ancient temple is dedicated to Lord Shiva. Kedarnath Temple is one
-            of the twelve Jyotirlingas, which are considered the most sacred
-            abodes of Lord Shiva. The temple's history dates back over a
-            thousand years and is believed to have been built by Adi
-            Shankaracharya, the renowned philosopher-saint of India. The journey
-            to Kedarnath Temple is not only a test of faith but also a
-            breathtaking adventure. Pilgrims undertake a challenging trek of
-            approximately 16 kilometers (10 miles) from Gaurikund, which
-            involves traversing rugged terrain and steep slopes. The path is
-            adorned with stunning natural beauty, including the Mandakini River,
-            snow-capped peaks, and dense forests. Along the way, several smaller
-            shrines and resting points provide solace and respite to the weary
-            travelers. The temple itself is a magnificent stone structure,
-            intricately adorned with ornate carvings and sculptures. The serene
-            ambiance and the reverberating sound of sacred chants create a
-            deeply spiritual atmosphere. Devotees offer prayers and seek
-            blessings from Lord Shiva, who is believed to reside in Kedarnath in
-            his form as the "Lord of Kedar Khand." Kedarnath Temple is not only
-            a place of devotion but also a testament to human resilience and
-            devotion.
+            {place?.place_description}
           </AppText>
         </View>
 
@@ -256,7 +270,7 @@ const styles = new StyleSheet.create({
     fontSize: totalSize(2.3),
   },
   destinationCountry: {
-    fontSize: totalSize(2),
+    fontSize: totalSize(1.7),
     color: colors.gray,
   },
   badgeKeyword: {
