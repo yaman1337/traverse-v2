@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
 import { width, height, totalSize } from "react-native-dimension";
 
@@ -9,8 +9,11 @@ import DestinationCard from "../components/DestinationCard";
 import TourCard from "../components/TourCard";
 import Spacer from "../components/Spacer";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { useNavigation } from "@react-navigation/native";
+import { getAllPlaces } from "../../config/api";
 
 export default function HomeScreen() {
+  const navigation = useNavigation();
   const [destinations, setDestinations] = useState([
     {
       name: "Paris",
@@ -55,6 +58,16 @@ export default function HomeScreen() {
     },
   ]);
 
+  useEffect(() => {
+    async function fetchPlaces() {
+      const result = await getAllPlaces();
+
+      setDestinations(result?.documents);
+    }
+
+    fetchPlaces();
+  }, []);
+
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -63,7 +76,10 @@ export default function HomeScreen() {
         </AppText>
 
         <View style={styles.searchInput}>
-          <AppInput placeholder="Search Destination or Places..." />
+          <AppInput
+            placeholder="Search Destination or Places..."
+            onPressIn={() => navigation.navigate("SearchDestinationScreen")}
+          />
         </View>
 
         <AppText variant="Bold" style={styles.screenHeaderTitle}>
@@ -77,10 +93,15 @@ export default function HomeScreen() {
         >
           {destinations.map((destination) => (
             <DestinationCard
-              key={destination.name}
-              name={destination.name}
-              address={destination.address}
-              image={destination.image}
+              key={destination.$id}
+              name={destination.title}
+              address={destination.location_description}
+              image={destination.image[0]}
+              onPress={() =>
+                navigation.navigate("DestinationDetailScreen", {
+                  id: destination.$id,
+                })
+              }
             />
           ))}
         </ScrollView>
@@ -97,6 +118,7 @@ export default function HomeScreen() {
               location={tour.location}
               subtitle={tour.subtitle}
               image={tour.image}
+              onPress={() => navigation.navigate("DestinationDetailScreen")}
             />
           ))}
         </View>

@@ -15,10 +15,44 @@ import MyTourScreen from "../screens/MyTourScreen";
 import TabButton from "../components/TabButton";
 import ChangePasswordScreen from "../screens/ChangePasswordScreen";
 import EditProfileScreen from "../screens/EditProfileScreen";
+import SearchDestinationScreen from "../screens/SearchDestinationScreen";
+import DestinationDetailScreen from "../screens/DestinationDetailScreen";
 
 const Tab = createBottomTabNavigator();
 
+const HomeStack = createNativeStackNavigator();
 const ProfileStack = createNativeStackNavigator();
+
+const HomeStackNavigator = () => {
+  return (
+    <HomeStack.Navigator initialRouteName="HomeScreen">
+      <HomeStack.Screen
+        name="HomeScreen"
+        component={HomeScreen}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <HomeStack.Screen
+        name="DestinationDetailScreen"
+        component={DestinationDetailScreen}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <HomeStack.Screen
+        name="SearchDestinationScreen"
+        component={SearchDestinationScreen}
+        options={{
+          headerTitle: "Search Destination",
+          headerTitleStyle: {
+            fontSize: totalSize(2.3),
+          },
+        }}
+      />
+    </HomeStack.Navigator>
+  );
+};
 
 const ProfileStackNavigator = () => {
   return (
@@ -52,7 +86,7 @@ const AuthNavigator = () => {
   return (
     <NavigationContainer>
       <Tab.Navigator
-        initialRouteName="HomeScreen"
+        initialRouteName="Home"
         screenOptions={{
           headerShown: false,
           tabBarShowLabel: false,
@@ -81,8 +115,8 @@ const AuthNavigator = () => {
           }}
         />
         <Tab.Screen
-          name="HomeScreen"
-          component={HomeScreen}
+          name="Home"
+          component={HomeStackNavigator}
           options={{
             tabBarIcon: ({ color, size }) => (
               <AntDesign name="home" color={color} size={size} />
