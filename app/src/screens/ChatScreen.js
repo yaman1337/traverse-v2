@@ -6,6 +6,8 @@ import { StyleSheet } from "react-native";
 import colors from "../../config/colors";
 import AppText from "../components/AppText";
 import AppInput from "../components/AppInput";
+import Spacer from "../components/Spacer";
+import { AntDesign } from "@expo/vector-icons";
 
 const ChatScreen = () => {
   return (
@@ -30,6 +32,13 @@ const ChatScreen = () => {
 
           <View style={styles.chatBox}>
             <AppText variant="Light" style={styles.chatText}>
+              I am an AI chatbot. I can help you find the best tour package for
+              you.
+            </AppText>
+          </View>
+
+          <View style={styles.userSentTextContainer}>
+            <AppText variant="Light" style={styles.userSentText}>
               I am looking for a tour package to Bali.
             </AppText>
           </View>
@@ -48,15 +57,17 @@ const ChatScreen = () => {
         </View>
         <TouchableOpacity
           style={{
-            backgroundColor: colors.primary,
+            backgroundColor: colors.black,
             borderRadius: totalSize(2),
             padding: totalSize(2),
             marginLeft: width(2),
           }}
         >
-          <AppText variant="Bold" style={{ color: colors.white }}>
-            Send
-          </AppText>
+          <AntDesign
+            name="arrowright"
+            size={totalSize(2.5)}
+            color={colors.white}
+          />
         </TouchableOpacity>
       </View>
     </SafeAreaView>
@@ -80,7 +91,18 @@ const styles = StyleSheet.create({
     marginBottom: height(2),
   },
   chatText: {
-    fontSize: totalSize(2),
+    fontSize: totalSize(1.7),
+  },
+  userSentTextContainer: {
+    flex: 1,
+    alignItems: "flex-end",
+  },
+  userSentText: {
+    fontSize: totalSize(1.7),
+    backgroundColor: colors.black,
+    padding: totalSize(1.2),
+    borderRadius: totalSize(2),
+    color: colors.white,
   },
   messageInput: {
     flex: 1,
