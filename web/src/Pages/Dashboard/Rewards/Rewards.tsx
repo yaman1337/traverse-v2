@@ -75,7 +75,7 @@ export default function Rewards() {
         <div className="rewards-history-table flex-auto w-80">
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
           <div className="group flex flex-col h-max bg-white border border-gray-200 shadow-sm rounded-xl ">
-              <div className="h-40 w-[300px] flex flex-col justify-center items-center bg-blue-600 rounded-t-xl">
+              <div className="h-40 flex flex-col justify-center items-center bg-blue-600 rounded-t-xl">
                 <img src="https://www.landnepal.com/wp-content/uploads/2021/08/bhaktapur.jpeg" className="w-full h-full object-cover" alt="Image" />
               </div>
               <div className="p-4 md:p-6">
