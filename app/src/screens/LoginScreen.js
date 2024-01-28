@@ -11,6 +11,7 @@ import { useContext, useState } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import { useToast } from "react-native-toast-notifications";
 import { account } from "../lib/appwrite";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function LoginScreen() {
   const toast = useToast();
@@ -78,7 +79,7 @@ export default function LoginScreen() {
   };
 
   return (
-    <ScrollView style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <AppText variant="SemiBold" style={styles.headerText}>
         Login
       </AppText>
@@ -151,7 +152,7 @@ export default function LoginScreen() {
           Don't have an account? Register
         </AppText>
       </View>
-    </ScrollView>
+    </SafeAreaView>
   );
 }
 

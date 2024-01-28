@@ -20,6 +20,7 @@ import AppInput from "../components/AppInput";
 import { AuthContext } from "../../context/AuthContext";
 import { useToast } from "react-native-toast-notifications";
 import { account } from "../lib/appwrite";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function RegisterScreen() {
   const navigation = useNavigation();
@@ -98,7 +99,7 @@ export default function RegisterScreen() {
   };
 
   return (
-    <ScrollView style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <AppText variant="SemiBold" style={styles.headerText}>
         Register Account
       </AppText>
@@ -186,7 +187,7 @@ export default function RegisterScreen() {
           Already Have an Account? Login
         </AppText>
       </View>
-    </ScrollView>
+    </SafeAreaView>
   );
 }
 

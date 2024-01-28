@@ -38,10 +38,6 @@ export default function MyFavoriteScreen() {
         "City of Lights is the capital of France. It is a major European city and a global center for art, fashion, gastronomy and culture. Its 19th-century cityscape is crisscrossed by wide boulevards and the River Seine. Beyond such landmarks as the Eiffel Tower and the 12th-century, Gothic Notre-Dame cathedral, the city is known for its cafe culture, and designer boutiques along the Rue du Faubourg Saint-Honoré.",
       image: "https://cdn-icons-png.flaticon.com/512/299/299068.png",
       subText: "City of Lights",
-      onPress: () => {
-        setFocusedFavorite(destinations[0]);
-        setShowModal(true);
-      },
     },
     {
       id: 2,
@@ -125,7 +121,12 @@ export default function MyFavoriteScreen() {
                 key={fav.id}
                 image={fav.image}
                 subText={fav.location}
-                onPress={() => handleRemoveFavorite(fav.id)}
+                onPress={() => {
+                  navigation.navigate("DestinationDetailScreen", {
+                    id: fav.id,
+                  });
+                }}
+                onLongPress={() => handleRemoveFavorite(fav.id)}
                 variant="SemiBold"
               >
                 {fav.title}

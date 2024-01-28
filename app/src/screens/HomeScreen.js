@@ -78,7 +78,7 @@ export default function HomeScreen() {
     <SafeAreaView style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false}>
         <AppText variant="Bold" style={styles.screenHeaderTitle}>
-          Recent Visited Destinations
+          Search Your Destinations
         </AppText>
 
         <View style={styles.searchInput}>
@@ -97,7 +97,7 @@ export default function HomeScreen() {
           horizontal
           showsHorizontalScrollIndicator={false}
         >
-          {destinations.map((destination) => (
+          {destinations.splice(0, 3).map((destination) => (
             <DestinationCard
               key={destination.$id}
               name={destination.title}
@@ -117,14 +117,18 @@ export default function HomeScreen() {
         </AppText>
 
         <View style={styles.tourContainer}>
-          {tours.map((tour) => (
+          {destinations.splice(0, 5).map((tour) => (
             <TourCard
-              key={tour.title}
+              key={tour.$id}
               title={tour.title}
-              location={tour.location}
-              subtitle={tour.subtitle}
-              image={tour.image}
-              onPress={() => navigation.navigate("DestinationDetailScreen")}
+              location={tour.location_description}
+              subtitle={tour.keyword}
+              image={tour.image[0]}
+              onPress={() =>
+                navigation.navigate("DestinationDetailScreen", {
+                  id: tour.$id,
+                })
+              }
             />
           ))}
         </View>

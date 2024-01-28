@@ -9,7 +9,8 @@ export default function FavoriteCard({
   image,
   variant = "Light",
   children,
-  onPress,
+  onPress = () => {},
+  onLongPress = () => {},
   subText,
   color,
   backgroundColor,
@@ -22,7 +23,8 @@ export default function FavoriteCard({
           backgroundColor: backgroundColor ? backgroundColor : colors.lightGray,
         },
       ]}
-      onLongPress={onPress}
+      onPress={onPress}
+      onLongPress={onLongPress}
       activeOpacity={0.4}
     >
       {image && (

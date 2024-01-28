@@ -23,7 +23,10 @@ import { useNavigation, useRoute } from "@react-navigation/native";
 import { addReview, getPlaceDetails, getPlaceReviews } from "../../config/api";
 import AppInput from "../components/AppInput";
 import { useToast } from "react-native-toast-notifications";
-import { storeFavoriteDestination } from "../../config/storage";
+import {
+  getFavoriteDestination,
+  storeFavoriteDestination,
+} from "../../config/storage";
 
 const DestinationDetailScreen = () => {
   const route = useRoute();
@@ -32,6 +35,7 @@ const DestinationDetailScreen = () => {
   const { id } = route.params;
   const [place, setPlace] = useState({});
   const [reviewLoader, setReviewLoader] = useState(false);
+  const [favorites, setFavorites] = useState([]); // [1, 2, 3
   const [userRating, setUserRating] = useState({
     rating: 0,
     review: "",
@@ -69,8 +73,14 @@ const DestinationDetailScreen = () => {
       setReviews(reviews?.documents?.reverse());
     }
 
+    async function getFavorites() {
+      const faovorites = await getFavoriteDestination();
+      setFavorites(faovorites);
+    }
+
     fetchPlaceDetail();
     fetchPlacesReview();
+    getFavorites();
   }, []);
 
   const handleOnViewInMapPress = () => {
@@ -154,6 +164,9 @@ const DestinationDetailScreen = () => {
         type: "success",
         duration: 2000,
       });
+
+      const faovorites = await getFavoriteDestination();
+      setFavorites(faovorites);
     } catch (error) {
       console.log(error);
     }
@@ -178,11 +191,24 @@ const DestinationDetailScreen = () => {
             </View>
 
             <TouchableOpacity
-              style={styles.headerRightContainer}
+              style={{
+                ...styles.headerRightContainer,
+                backgroundColor: favorites.find((fav) => fav.id === place.$id)
+                  ? colors.red
+                  : colors.lightGray,
+              }}
               activeOpacity={0.5}
               onPress={handleAddToFavorite}
             >
-              <AntDesign name="hearto" size={24} color="black" />
+              <AntDesign
+                name="hearto"
+                size={24}
+                color={
+                  favorites.find((fav) => fav.id === place.$id)
+                    ? colors.white
+                    : colors.black
+                }
+              />
             </TouchableOpacity>
           </View>
 
@@ -326,7 +352,7 @@ const DestinationDetailScreen = () => {
                 reviews.map((review) => (
                   <View style={styles.reviewCardContainer} key={review?.$id}>
                     <View style={styles.reviewCardHeader}>
-                      <UserAvatar size={40} name={review.name} />
+                      <UserAvatar size={40} name={review.author_id} />
                       <View style={styles.reviewCardHeaderInfo}>
                         <AppText
                           variant="Medium"
@@ -470,7 +496,7 @@ const styles = new StyleSheet.create({
     borderRadius: width(2),
   },
   badgeKeywordText: {
-    fontSize: totalSize(1.5),
+    fontSize: totalSize(1.3),
     color: colors.gray,
   },
   postedByContainer: {
