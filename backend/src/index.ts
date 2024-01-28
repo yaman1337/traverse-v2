@@ -1,6 +1,7 @@
 import express, { Application, Request, Response } from "express";
 import dotenv from "dotenv";
 import { authRouter, placesRouter, reviewsRouter } from "./routes";
+import cors from  "cors"
 
 dotenv.config();
 
@@ -10,6 +11,7 @@ const app: Application = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cors())
 
 app.get("/", (req: Request, res: Response) => {
   res.send("Traverse backend is up and running.");
