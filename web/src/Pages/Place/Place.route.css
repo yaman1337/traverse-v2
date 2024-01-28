@@ -1,0 +1,33 @@
+.place-page-wrapper{
+    width: 100%;
+    height: max-content;
+    display: flex;
+    flex-direction: column;
+}
+
+.place-page-wrapper .header{
+    position: fixed;
+}
+
+.place-page-wrapper .place-content{
+    width: 100%;
+    min-width: 850px;
+    min-height: 85vh;
+    padding: 70px 15% 1.5em 15%;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    background-color: #eaebefed;
+    box-shadow: 0 5px 10px #cccc;
+}
+
+.place-page-wrapper .place-content .image-section{
+    width: 100%;
+    flex: 1;
+}
+
+.place-content .top,
+.place-content .bottom{
+    width: 100%;
+    height: max-content;
+}
